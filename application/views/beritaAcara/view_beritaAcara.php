@@ -28,14 +28,14 @@ $this->load->view('template/sidebar');
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Title</h3>
+            <h3 class="box-title">Form pengisian berita acara kejadian</h3>
             <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                 <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
             </div>
         </div>
         <div class="box-body">
-        <?php echo form_open('Berita_acara/input'); ?>
+        <?php echo form_open('BeritaAcara/input'); ?>
             <form role="form">
             <div class="box-body">
             <label for="exampleInputEmail1">I. Data & Infomasi</label>
@@ -43,17 +43,17 @@ $this->load->view('template/sidebar');
             
                 <div class="form-group">
                   <label for="informasiDiterima">Informasi diterima pukul:</label>
-                  <input type="text" class="form-control" id="informasiDiterima"  name="informasiDiterima" required>
+                  <input type="time" class="form-control" id="informasiDiterima"  name="informasiDiterima" required>
                 </div>
 
                 <div class="form-group">
                   <label for="tibaDilokasi">Tiba di lokasi pukul:</label>
-                  <input type="text" class="form-control" id="tibaDilokasi"  name="tibaDilokasi" required>
+                  <input type="time" class="form-control" id="tibaDilokasi"  name="tibaDilokasi" required>
                 </div>
 
                 <div class="form-group">
                   <label for="selesaiPemadaman">Selesai pemadaman pukul:</label>
-                  <input type="text" class="form-control" id="selesaiPemadaman"  name="selesaiPemadaman" required>
+                  <input type="time" class="form-control" id="selesaiPemadaman"  name="selesaiPemadaman" required>
                 </div>
 
                 <div class="form-group">
@@ -81,7 +81,12 @@ $this->load->view('template/sidebar');
                     <input type="text" name="desa" required><br>&nbsp;
 
                     <label  for="">Kecamatan</label><br>&nbsp;
-                    <input type="text" name="kecamatan" required><br>&nbsp;
+                    <select name="kecamatan" id="">
+                    <?php foreach ($kec as $k ) {
+                      echo '<option value="' . $k->Nama_kecamatan . '">' . $k->Nama_kecamatan . '</option>';
+                    }
+                     ?>
+                    </select><br>&nbsp;
 
                     <label  for="">Kab\Kota</label><br>&nbsp;
                     <input type="text" name="kota" required><br>&nbsp;
@@ -97,18 +102,13 @@ $this->load->view('template/sidebar');
                   <input type="number" class="form-control" id="jumlahPenghuni"  name="jumlahPenghuni" required>
                 </div>
 
-                <div class="form-group">
-                  <label for="selesaiPemadaman">Nama Pemilik:</label>
-                  <input type="text" class="form-control" id="namaPemilik"  name="namaPemilik" required>
-                </div>
-
                 <hr>
                 <label for="">II. Data Investigasi</label>
                 <hr>
 
                 <div class="form-group">
                   <label>Jenis Bangunan Yang Terbakar:</label>
-                  <select class="form-control">
+                  <select class="form-control" name="jenisBangunan">
                     <option>Bangunan Tinggal</option>
                     <option>Gudang</option>
                     <option>Pabrik</option>
@@ -117,17 +117,15 @@ $this->load->view('template/sidebar');
                 </div>
 
                 <div class="form-group">
-                  <label for="selesaiPemadaman">Area Yang Terbakar:</label>
+                  <label for="areaTerbakar">Area Yang Terbakar:</label>
                   <input type="text" class="form-control" id="areaTerbakar"  name="areaTerbakar" required>
                 </div>
 
-                <label for="">Luas Area Yang Terbakar</label>
-                <div class="input-group">
-                    <input type="number" class="form-control" nama="luasArea">
-                    <span class="input-group-addon"><b>M2</b></span>
+                <div class="form-group">
+                  <label for="luasArea">Luas Area Yang Terbakar:</label>
+                  <input type="text" class="form-control" id="luasArea"  name="luasArea" required>
                 </div>
-                <br>
-
+                
                 <label for="">Kerugian Harta Benda:</label> <br>
                 <label style="padding-left:5em" for="asetKeseluruhan">Nilai Aset Keseluruhan:</label>
                 <div class="input-group" style="padding-left:5em">
@@ -179,23 +177,23 @@ $this->load->view('template/sidebar');
                 <label for="">Regu Piket:</label>
                 <div class="form-group" style="padding-left:5em">
                   <label for="meninggal">Danru I:</label>
-                  <input type="text" class="form-control" id="danru1"  name="danru1" required>
+                  <input type="text" class="form-control" id="danru1"  name="danru1" >
                 </div>
 
                 <div class="form-group" style="padding-left:5em">
                   <label for="meninggal">Danru II:</label>
-                  <input type="text" class="form-control" id="danru2"  name="danru2" required>
+                  <input type="text" class="form-control" id="danru2"  name="danru2" >
                 </div>
 
                 <label for="">Peleton Piket:</label>
                 <div class="form-group" style="padding-left:5em">
                   <label for="meninggal">Danton I:</label>
-                  <input type="text" class="form-control" id="danton1"  name="danton2" required>
+                  <input type="text" class="form-control" id="danton1"  name="danton1" >
                 </div>
 
                 <div class="form-group" style="padding-left:5em">
                   <label for="meninggal">Danton II:</label>
-                  <input type="text" class="form-control" id="danton2"  name="danton2" required>
+                  <input type="text" class="form-control" id="danton2"  name="danton2" >
                 </div>
                 
                 <button type="submit" class="btn btn-info pull-right">Kirirm</button>
@@ -214,41 +212,8 @@ $this->load->view('template/sidebar');
 <?php 
 $this->load->view('template/js');
 ?>
-<script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
 <script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
-<link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
 <script>
-    
-    
-    var timepicker = new TimePicker('tibaDilokasi', {
-        lang: 'en',
-        theme: 'dark'
-    });
-
-    timepicker.on('change',function(evt) {
-        var value = (evt.hour || '00') + ':' + (evt.minute || '00');
-        evt.element.value = value;
-    });
-
-    var time = new TimePicker('selesaiPemadaman', {
-        lang: 'en',
-        theme: 'dark'
-    });
-
-    time.on('change',function(evt2) {
-        var value2 = (evt2.hour || '00') + ':' + (evt2.minute || '00');
-        evt2.element.value = value2;
-    });
-
-    // var timepicker3 = new TimePicker('informasiDiterima', {
-    //     lang: 'en',
-    //     theme: 'dark'
-    // });
-
-    // timepicker3.on('change',function(evt3) {
-    //     var value3 = (evt3.hour || '00') + ':' + (evt3.minute || '00');
-    //     evt2.element.value = value3;
-    // });
 
     $(document).ready(function(){
         // Format mata uang.
@@ -256,9 +221,6 @@ $this->load->view('template/js');
         $( '#asetTerselamatkan' ).mask('000.000.000.000', {reverse: true});
         $( '#nilaiKerugian' ).mask('000.000.000.000', {reverse: true});
     });
-
-
-    
 
 </script>
 <!--tambahkan custom js disini-->
