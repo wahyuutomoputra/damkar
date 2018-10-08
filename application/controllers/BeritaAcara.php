@@ -22,6 +22,37 @@ class BeritaAcara extends CI_Controller {
         $this->M_berita_acara->insert();
     }
 
-	
+    //tampilkan berita acara
+    public function tampil_beritaAcara()
+    {
+        $this->load->view('beritaAcara/tampil_beritaAcara');
+    }
+
+    public function get_data_beritaAcara()
+    {
+        $list = $this->M_berita_acara->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->namaPemilik;
+            $row[] = $field->desa;
+            $row[] = $field->kecamatan;
+ 
+            $data[] = $row;
+        }
+ 
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_berita_acara->count_all(),
+            "recordsFiltered" => $this->M_berita_acara->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    
+    }
         
 }
