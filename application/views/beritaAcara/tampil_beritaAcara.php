@@ -34,6 +34,43 @@ $this->load->view('template/sidebar');
             </div>
         </div>
         <div class="box-body">
+        
+        <!-- <form id="form-filter" action="#" method="post">
+            <div class="form-group">
+                <label>Bulan:</label>
+                <select class="form-control" id="bulan" name="bulan"> 
+                    <option  >Pilih Bulan</option>
+                    <option value="1">Januari</option>
+                    <option value="2">Februari</option>
+                    <option value="3">Maret</option>
+                    <option value="4">April</option>
+                    <option value="5">Mei</option>
+                    <option value="6">Juni</option>
+                    <option value="7">Juli</option>
+                    <option value="8">Agustus</option>
+                    <option value="9">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Desember</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Tahun">Tahun:</label>
+                <input type="number" class="form-control" id="Tahun"  name="Tahun">
+            </div>
+        
+            <div class="form-group">
+                <label for="LastName" class="col-sm-2 control-label"></label>
+                <div class="col-sm-4">
+                    <button type="button" id="btn-filter" class="btn btn-primary">Filter</button>
+                    <button type="button" id="btn-reset" class="btn btn-default">Reset</button>
+                </div>
+            </div>
+        </form> -->
+            
+            <br><hr>
+           
             <table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                 <thead>
                     <tr>
@@ -41,6 +78,7 @@ $this->load->view('template/sidebar');
                         <th>Nama Pemilik</th>
                         <th>Desa</th>
                         <th>Kecamatan</th>
+                        <th>Detail</th>
                     </tr>
                 </thead>
 
@@ -53,6 +91,7 @@ $this->load->view('template/sidebar');
                         <th>Nama Pemilik</th>
                         <th>Desa</th>
                         <th>Kecamatan</th>
+                        <th>Detail</th>
                     </tr>
                 </tfoot>
 
@@ -87,6 +126,8 @@ $this->load->view('template/js');
             "ajax": {
                 "url": "<?php echo site_url('BeritaAcara/get_data_beritaAcara')?>",
                 "type": "POST"
+                
+            
             },
  
              
@@ -98,6 +139,15 @@ $this->load->view('template/js');
             ],
  
         });
+
+        // $('#btn-filter').click(function(){ //button filter event click
+        // table.ajax.reload();  //just reload table
+        // });
+
+        // $('#btn-reset').click(function(){ //button reset event click
+        //     $('#form-filter')[0].reset();
+        //     table.ajax.reload();  //just reload table
+        // });
  
     });
  

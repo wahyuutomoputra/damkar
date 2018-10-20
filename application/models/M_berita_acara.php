@@ -3,8 +3,8 @@
 class M_berita_acara extends CI_Model
 {
     var $table = 'Berita_Acara';
-    var $column_order = array(null,'namaPemilik','desa','kecamatan');
-    var $column_search = array('namaPemilik','desa','kecamatan');
+    var $column_order = array(null,'namaPemilik','desa','tanggal');
+    var $column_search = array('namaPemilik','desa','tanggal');
     var $order = array('id' => 'asc');
 
     public function insert()
@@ -27,6 +27,7 @@ class M_berita_acara extends CI_Model
             'areaTerbakar' => $this->input->post('areaTerbakar'),
             'luasArea' => $this->input->post('luasArea'),
             'asetKeseluruhan' => $this->input->post('asetKeseluruhan'),
+            'nilaiKerugian' => $this->input->post('nilaiKerugian'),
             'asetTerselamatkan' => $this->input->post('asetTerselamatkan'),
             'luka' => $this->input->post('luka'),
             'meninggal' => $this->input->post('meninggal'),
@@ -47,8 +48,21 @@ class M_berita_acara extends CI_Model
         return $this->db->get('kecamatan');
     }
 
+    public function get_detail($id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->get('Berita_Acara');
+    }
+
     private function get_datatables_query()
     {
+        // if($this->input->post('Tahun'))
+        // {
+        //     //$tgl = $this->input->post('bulan');
+        //     //$this->db->query("select * from Berita_Acara where month(tanggal) = '$tgl'");
+        //     $this->db->where("DATE_FORMAT(tanggal,'%m')", $this->input->post('Tahun'));
+        // }
+
         $this->db->from($this->table);
         $i = 0;
 

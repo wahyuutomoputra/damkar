@@ -28,6 +28,14 @@ class BeritaAcara extends CI_Controller {
         $this->load->view('beritaAcara/tampil_beritaAcara');
     }
 
+    //tampilkan detail berita acara
+    public function detail_beritaAcara($id)
+    {
+        $data['detail'] = $this->M_berita_acara->get_detail($id)->row_array();
+        $this->load->view('beritaAcara/detail_beritaAcara',$data);
+
+    }
+
     public function get_data_beritaAcara()
     {
         $list = $this->M_berita_acara->get_datatables();
@@ -39,7 +47,8 @@ class BeritaAcara extends CI_Controller {
             $row[] = $no;
             $row[] = $field->namaPemilik;
             $row[] = $field->desa;
-            $row[] = $field->kecamatan;
+            $row[] = $field->tanggal;
+            $row[] =  "<a href=".base_url('BeritaAcara/detail_beritaAcara/'.$field->id).">Detail</a>";
  
             $data[] = $row;
         }

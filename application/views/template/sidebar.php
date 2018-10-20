@@ -33,8 +33,18 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?php echo site_url('Berita_acara/view_isi') ?>"><i class="fa fa-circle-o"></i> Isi Berita Acara</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Lihat Berita Acara</a></li>
+                    <li><a href="<?php echo site_url('BeritaAcara/view_isi') ?>"><i class="fa fa-circle-o"></i> Isi Berita Acara</a></li>
+                    <li><a href="<?php echo site_url('BeritaAcara/tampil_beritaAcara') ?>"><i class="fa fa-circle-o"></i> Lihat Berita Acara</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-laptop"></i>
+                    <span>Laporan Kebakaran</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="<?php echo site_url('Grafik/grafikKebakaran') ?>"><i class="fa fa-circle-o"></i> Grafik Kebakaran</a></li>
                 </ul>
             </li>
             <li class="header">LABELS</li>
