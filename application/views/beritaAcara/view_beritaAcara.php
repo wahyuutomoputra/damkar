@@ -2,6 +2,7 @@
 $this->load->view('template/head');
 ?>
 <!--tambahkan custom css disini-->
+<link href="<?php echo base_url('assets/datetimepicker/bootstrap-datetimepicker.css') ?>" rel="stylesheet" type="text/css" />
 <style>
    hr { background-color: rgba(0, 0, 255, 0.3); height: 2px; border: 0; }
 </style>
@@ -41,19 +42,35 @@ $this->load->view('template/sidebar');
             <label for="exampleInputEmail1">I. Data & Infomasi</label>
             <hr>
             
+            
                 <div class="form-group">
-                  <label for="informasiDiterima">Informasi diterima pukul:</label>
-                  <input type="time"  class="form-control" id="informasiDiterima"  name="informasiDiterima" required>
+                    <label for="informasiDiterima">Informasi diterima pukul:</label>
+                    <div class='input-group date'>
+                        <input type="text"  class="form-control" id="informasiDiterima"  name="informasiDiterima" required>
+                        <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                    </div>  
                 </div>
 
                 <div class="form-group">
-                  <label for="tibaDilokasi">Tiba di lokasi pukul:</label>
-                  <input type="time" class="form-control" id="tibaDilokasi"  name="tibaDilokasi" required>
+                    <label for="tibaDilokasi">Tiba di lokasi pukul:</label>
+                    <div class='input-group date'>
+                        <input type="text" class="form-control" id="tibaDilokasi"  name="tibaDilokasi" required>
+                        <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                    </div>  
                 </div>
 
                 <div class="form-group">
-                  <label for="selesaiPemadaman">Selesai pemadaman pukul:</label>
-                  <input type="time" class="form-control" id="selesaiPemadaman"  name="selesaiPemadaman" required>
+                    <label for="selesaiPemadaman">Selesai pemadaman pukul:</label>
+                    <div class='input-group date'>
+                        <input type="text" class="form-control" id="selesaiPemadaman"  name="selesaiPemadaman" required>
+                        <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                    </div>  
                 </div>
 
                 <div class="form-group">
@@ -83,7 +100,7 @@ $this->load->view('template/sidebar');
                     <label  for="">Kecamatan</label><br>&nbsp;
                     <select name="kecamatan" id="">
                     <?php foreach ($kec as $k ) {
-                      echo '<option value="' . $k->Nama_kecamatan . '">' . $k->Nama_kecamatan . '</option>';
+                      echo '<option value="' . $k->idKecamatan . '">' . $k->nama . '</option>';
                     }
                      ?>
                     </select><br>&nbsp;
@@ -212,10 +229,28 @@ $this->load->view('template/sidebar');
 <?php 
 $this->load->view('template/js');
 ?>
+<script src="<?php echo base_url('assets/datetimepicker/timepicker.min.js') ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/datetimepicker/moment-with-locales.js') ?>" type="text/javascript"></script>
 <script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
+        
+        
+        <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
 <script>
 
     $(document).ready(function(){
+        $('#informasiDiterima').datetimepicker({
+            format: 'HH:mm'
+            });
+        
+         $('#tibaDilokasi').datetimepicker({
+            format: 'HH:mm'
+            });
+
+         $('#selesaiPemadaman').datetimepicker({
+            format: 'HH:mm'
+            });
+        
+       
         // Format mata uang.
         $( '#asetKeseluruhan' ).mask('000.000.000.000', {reverse: true});
         $( '#asetTerselamatkan' ).mask('000.000.000.000', {reverse: true});

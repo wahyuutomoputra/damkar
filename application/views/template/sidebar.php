@@ -45,6 +45,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="<?php echo site_url('Grafik/grafikKebakaran') ?>"><i class="fa fa-circle-o"></i> Grafik Kebakaran</a></li>
+                    <li><a href="<?php echo site_url('Grafik/grafikKecamatan') ?>"><i class="fa fa-circle-o"></i> Laporan Per-Kecamatan</a></li>
                 </ul>
             </li>
             <li class="header">LABELS</li>

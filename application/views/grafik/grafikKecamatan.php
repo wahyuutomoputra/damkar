@@ -10,13 +10,10 @@ $this->load->view('template/sidebar');
 <?php
     if ($data!=null) {
         foreach($data as $hasil){
-            $jenis[] = $hasil->jenisBangunan;
-            $jumlah[] = (integer)$hasil->jenis;
-            $total = $hasil->totalJumlah;
-            $nilaiKerugian = "Rp " . number_format($hasil->totalKerugian,2,',','.');
-            $nilaiAset = "Rp " . number_format($hasil->totalAset,2,',','.');
+            $kec[] = $hasil->nama;
+            $jum[] = (integer)$hasil->jumlah;
             if(!isset($tanggal)){
-                $tanggalKet = "Seluruh Laporan Kebakaran";
+                $tanggalKet = "Seluruh Kecamatan";
             }else {
                 $tanggalKet = $tanggal;
             }
@@ -51,7 +48,7 @@ $this->load->view('template/sidebar');
             </div>
         </div>
         <div class="box-body">
-        <?php echo form_open('Grafik/grafikKebakaran'); ?>
+        <?php echo form_open('Grafik/grafikKecamatan'); ?>
             <form id="form-filter">
             <div class="form-group">
                 <label>Dari Bulan:</label>
@@ -98,7 +95,7 @@ $this->load->view('template/sidebar');
 
             <button type="submit" name="submit" value="Kirim" class="btn btn-primary pull-right">Cari</button>
         </form> 
-        <a href="<?php base_url('Grafik/grafikKebakaran');?>" class="btn btn-default">Reset</a>
+        <a href="<?php base_url('Grafik/grafikKecamatan');?>" class="btn btn-default">Reset</a>
     
         </div><!-- /.box-body -->
         <div class="box-footer">
@@ -121,10 +118,8 @@ $this->load->view('template/sidebar');
             echo "<b>Data tidak ditemukan</b>";
         }else{
         ?>
-          <canvas id="grafik" height=100></canvas>
-          <p align="center"><b>Jumlah Total: <?php echo $total; ?></b></p>
-          <h4  class="box-title">Nilai Kerugian:&nbsp; <?php echo $nilaiKerugian; ?></h4>
-          <h4  class="box-title">Nilai Aset Terselamatkan:&nbsp; <?php echo $nilaiAset; ?></h4>
+          <canvas id="grafik" width="700" height="300"></canvas>
+          
         <?php } ?>
         </div><!-- /.box-body -->
         <div class="box-footer">
@@ -133,64 +128,35 @@ $this->load->view('template/sidebar');
     </div><!-- /.box -->
 
 </section><!-- /.content -->
-<script src="<?php echo base_url('assets/ChartJs/Chart.min.js') ?>" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
  
  <script>
  new Chart(document.getElementById("grafik"), {
-    type: 'pie',
+    type: 'bar',
     data: {
-      labels: <?php echo json_encode($jenis);?>,
-      datasets: [{
-        label: "Laporan ",
-        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-        data: <?php echo json_encode($jumlah);?>
-      }]
+      labels: <?php echo json_encode($kec); ?>,
+      datasets: [
+        {
+          label: "Jumlah Kebakaran",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: <?php echo json_encode($jum); ?>
+        }
+      ]
     },
     options: {
+      legend: { display: false },
       title: {
         display: true,
         text: '<?php echo $tanggalKet; ?>'
       },
-      //yg legend ga wajib
-      legend: {
-            display: true,
-            position: 'bottom',
-            labels: {
-                generateLabels: function(chart) {
-                    var data = chart.data;
-                    if (data.labels.length && data.datasets.length) {
-                        return data.labels.map(function(label, i) {
-                            var meta = chart.getDatasetMeta(0);
-                            var ds = data.datasets[0];
-                            var arc = meta.data[i];
-                            var custom = arc && arc.custom || {};
-                            var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
-                            var arcOpts = chart.options.elements.arc;
-                            var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                            var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                            var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
-
-							// We get the value of the current label
-							var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
-
-                            return {
-                                // Instead of `text: label,`
-                                // We add the value to the string
-                                text: label + " : " + value,
-                                fillStyle: fill,
-                                strokeStyle: stroke,
-                                lineWidth: bw,
-                                hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
-                                index: i
-                            };
-                        });
-                    } else {
-                        return [];
-                    }
+      scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
                 }
-            }
+            }]
         }
-        
     }
 });
 </script>

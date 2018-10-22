@@ -9,17 +9,19 @@ class M_berita_acara extends CI_Model
 
     public function insert()
     {
+        $selisih = $this->hitung_selisih($this->input->post('informasiDiterima').":00",$this->input->post('tibaDilokasi').":00");
+
         $data = array(
             'informasiDiterima' => $this->input->post('informasiDiterima'),
             'tibaDilokasi' => $this->input->post('tibaDilokasi'),
             'selesaiPemadaman' => $this->input->post('selesaiPemadaman'),
-            'responTime' => "belum",
+            'responTime' => $selisih,
             'tanggal' => $this->input->post('tanggal'),
             'rt' => $this->input->post('rt'),
             'rw' => $this->input->post('rw'),
             'kampung' => $this->input->post('kampung'),
             'desa' => $this->input->post('desa'),
-            'kecamatan' => $this->input->post('kecamatan'),
+            'idKecamatan' => $this->input->post('kecamatan'),
             'kota' => $this->input->post('kota'),
             'namaPemilik' => $this->input->post('namaPemilik'),
             'jumlahPenghuni' => $this->input->post('jumlahPenghuni'),
@@ -43,15 +45,41 @@ class M_berita_acara extends CI_Model
         return $this->db->insert('Berita_Acara', $data);
     }
 
+    private function hitung_selisih($jam_terima,$jam_tiba)
+    {
+
+        list($h,$m,$s) = explode(":",$jam_terima);
+        $dtAwal = mktime($h,$m,$s,"1","1","1");
+        if (substr($jam_tiba,0,2)>= 18) {
+            $waktu = mktime("18","00","00","1","1","1");
+            $dtAkhir = $waktu;
+        }else {
+            list($h,$m,$s) = explode(":",$jam_tiba);
+            $dtAkhir = mktime($h,$m,$s,"1","1","1");
+        }
+        $dtSelisih = $dtAkhir-$dtAwal;
+        $totalmenit = $dtSelisih/60;
+        $jam = explode(".",$totalmenit/60);
+        $sisamenit = ($totalmenit/60)-$jam[0];
+        $sisamenit2 = $sisamenit*60;
+        $jml_jam = $jam[0];
+
+        return $jml_jam." jam ".ceil($sisamenit2)." menit";
+    }
+
     public function get_kecamatan()
     {
+        $this->db->order_by("nama", "asc");
         return $this->db->get('kecamatan');
     }
 
     public function get_detail($id)
     {
+        $this->db->select('*');
+        $this->db->from('Berita_Acara');
+        $this->db->join('kecamatan', 'kecamatan.idKecamatan = Berita_Acara.idKecamatan');
         $this->db->where('id', $id);
-        return $this->db->get('Berita_Acara');
+        return $this->db->get();
     }
 
     private function get_datatables_query()

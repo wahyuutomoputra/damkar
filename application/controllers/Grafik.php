@@ -13,7 +13,34 @@ class Grafik extends CI_Controller {
 
 	public function grafikKebakaran()
 	{
-        $x['data']=$this->M_grafik->get_dataKebakaran();
+		if ($this->input->post('submit')) {
+			$bulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+			$dari = intval($this->input->post('dari')) - 1;
+			$sampai = intval($this->input->post('sampai')) - 1;
+			$x['tanggal'] = "Laporan Penanggulangan Kejadian Kebakaran selama bulan "
+						.$bulan[$dari]." - "
+						.$bulan[$sampai]." Tahun "
+						.$this->input->post('tahun');
+		}
+
+		$x['data'] = $this->M_grafik->get_dataKebakaran();
 		$this->load->view('grafik/grafikKebakaran',$x);
+	}
+
+	//menampilkan data kebakaran per kecamatan
+	public function grafikKecamatan()
+	{
+		if ($this->input->post('submit')) {
+			$bulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+			$dari = intval($this->input->post('dari')) - 1;
+			$sampai = intval($this->input->post('sampai')) - 1;
+			$x['tanggal'] = "Laporan Penanggulangan Kebakaran Per-Kecamatan selama bulan "
+						.$bulan[$dari]." - "
+						.$bulan[$sampai]." Tahun "
+						.$this->input->post('tahun');
+		}
+		
+		$x['data'] = $this->M_grafik->get_dataKecamatan();
+		$this->load->view('grafik/grafikKecamatan',$x);
 	}
 }

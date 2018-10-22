@@ -19,7 +19,10 @@ class BeritaAcara extends CI_Controller {
 
     public function input()
     {
-        $this->M_berita_acara->insert();
+        $insert = $this->M_berita_acara->insert();
+        if ($insert) {
+            $this->tampil_beritaAcara();
+        }
     }
 
     //tampilkan berita acara
@@ -36,18 +39,29 @@ class BeritaAcara extends CI_Controller {
 
     }
 
+    
     public function get_data_beritaAcara()
     {
         $list = $this->M_berita_acara->get_datatables();
         $data = array();
         $no = $_POST['start'];
+        $hari = array ( 1 =>    'Senin',
+				'Selasa',
+				'Rabu',
+				'Kamis',
+				'Jumat',
+				'Sabtu',
+				'Minggu'
+			);
         foreach ($list as $field) {
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $field->namaPemilik;
-            $row[] = $field->desa;
             $row[] = $field->tanggal;
+            $row[] = $hari[date('N', strtotime($field->tanggal))];
+            $row[] = $field->namaPemilik;
+            //$row[] = $field->desa;
+            
             $row[] =  "<a href=".base_url('BeritaAcara/detail_beritaAcara/'.$field->id).">Detail</a>";
  
             $data[] = $row;

@@ -49,7 +49,7 @@ class Migration_berita_acara extends CI_Migration {
                             'type' => 'VARCHAR',
                             'constraint' => '30',
                         ),
-                        'kecamatan' => array(
+                        'idKecamatan' => array(
                             'type' => 'VARCHAR',
                             'constraint' => '30',
                         ),
@@ -82,6 +82,10 @@ class Migration_berita_acara extends CI_Migration {
                             'constraint' => '30',
                         ),
                         'asetTerselamatkan' => array(
+                            'type' => 'VARCHAR',
+                            'constraint' => '30',
+                        ),
+                        'nilaiKerugian' => array(
                             'type' => 'VARCHAR',
                             'constraint' => '30',
                         ),

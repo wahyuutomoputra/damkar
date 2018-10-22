@@ -75,9 +75,9 @@ $this->load->view('template/sidebar');
                 <thead>
                     <tr>
                         <th>NO</th>
-                        <th>Nama Pemilik</th>
-                        <th>Desa</th>
-                        <th>Kecamatan</th>
+                        <th>Tanggal</th>
+                        <th>Hari</th>
+                        <th>Tanggal</th>
                         <th>Detail</th>
                     </tr>
                 </thead>
@@ -88,9 +88,9 @@ $this->load->view('template/sidebar');
                 <tfoot>
                     <tr>
                         <th>NO</th>
-                        <th>Nama Pemilik</th>
-                        <th>Desa</th>
-                        <th>Kecamatan</th>
+                        <th>Tanggal</th>
+                        <th>Hari</th>
+                        <th>Tanggal</th>
                         <th>Detail</th>
                     </tr>
                 </tfoot>

@@ -43,17 +43,17 @@ $this->load->view('template/sidebar');
             
                 <div class="form-group">
                   <label for="informasiDiterima">Informasi diterima pukul:</label>
-                  <input type="time" value="<?php echo $detail['informasiDiterima']; ?>" class="form-control" id="informasiDiterima"  name="informasiDiterima" required>
+                  <input type="time" value="<?php echo $detail['informasiDiterima']; ?>" class="form-control" id="informasiDiterima"  name="informasiDiterima" disabled>
                 </div>
 
                 <div class="form-group">
                   <label for="tibaDilokasi">Tiba di lokasi pukul:</label>
-                  <input type="time" value="<?php echo $detail['tibaDilokasi']; ?>" class="form-control" id="tibaDilokasi"  name="tibaDilokasi" required>
+                  <input type="time" value="<?php echo $detail['tibaDilokasi']; ?>" class="form-control" id="tibaDilokasi"  name="tibaDilokasi" disabled>
                 </div>
 
                 <div class="form-group">
                   <label for="selesaiPemadaman">Selesai pemadaman pukul:</label>
-                  <input type="time" value="<?php echo $detail['selesaiPemadaman']; ?>" class="form-control" id="selesaiPemadaman"  name="selesaiPemadaman" required>
+                  <input type="time" value="<?php echo $detail['selesaiPemadaman']; ?>" class="form-control" id="selesaiPemadaman"  name="selesaiPemadaman" disabled>
                 </div>
 
                 <div class="form-group">
@@ -62,42 +62,42 @@ $this->load->view('template/sidebar');
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                    <input type="date" value="<?php echo $detail['tanggal']; ?>" id="tanggal" name="tanggal" class="form-control">
+                    <input type="date" value="<?php echo $detail['tanggal']; ?>" id="tanggal" name="tanggal" class="form-control" disabled>
                     </div>
                 </div>
 
                 <label >Alamat:</label>
                 <div class="form-group" style="padding-left:5em">&nbsp;
                     <label  for="">Rt</label><br>&nbsp;
-                    <input type="number" value="<?php echo $detail['rt']; ?>" name="rt" required><br>&nbsp;
+                    <input type="number" value="<?php echo $detail['rt']; ?>" name="rt" disabled><br>&nbsp;
 
                     <label  for="">Rw</label><br>&nbsp;
-                    <input type="number" value="<?php echo $detail['rw']; ?>" name="rw" required><br>&nbsp;
+                    <input type="number" value="<?php echo $detail['rw']; ?>" name="rw" disabled><br>&nbsp;
 
                     <label  for="">Kampung</label><br>&nbsp;
-                    <input type="text" value="<?php echo $detail['kampung']; ?>" name="kampung" required><br>&nbsp;
+                    <input type="text" value="<?php echo $detail['kampung']; ?>" name="kampung" disabled><br>&nbsp;
 
                     <label  for="">Desa/Kelurahan</label><br>&nbsp;
-                    <input type="text" value="<?php echo $detail['desa']; ?>" name="desa" required><br>&nbsp;
+                    <input type="text" value="<?php echo $detail['desa']; ?>" name="desa" disabled><br>&nbsp;
 
                     <label  for="">Kecamatan</label><br>&nbsp;
                     <select name="kecamatan" id="">
-                    <option value="<?php echo $detail['kecamatan']; ?>"><?php echo $detail['kecamatan']; ?></option>
+                    <option value="<?php echo $detail['nama']; ?>"><?php echo $detail['nama']; ?></option>
                     
                     </select><br>&nbsp;
 
                     <label  for="">Kab\Kota</label><br>&nbsp;
-                    <input type="text" value="<?php echo $detail['kota']; ?>" name="kota" required><br>&nbsp;
+                    <input type="text" value="<?php echo $detail['kota']; ?>" name="kota" disabled><br>&nbsp;
                 </div>
 
                 <div class="form-group">
                   <label for="selesaiPemadaman">Nama Pemilik:</label>
-                  <input type="text" value="<?php echo $detail['namaPemilik']; ?>" class="form-control" id="namaPemilik"  name="namaPemilik" required>
+                  <input type="text" value="<?php echo $detail['namaPemilik']; ?>" class="form-control" id="namaPemilik"  name="namaPemilik" disabled>
                 </div>
 
                 <div class="form-group">
                   <label for="selesaiPemadaman">Jumlah Penghuni:</label>
-                  <input type="number" value="<?php echo $detail['jumlahPenghuni']; ?>" class="form-control" id="jumlahPenghuni"  name="jumlahPenghuni" required>
+                  <input type="number" value="<?php echo $detail['jumlahPenghuni']; ?>" class="form-control" id="jumlahPenghuni"  name="jumlahPenghuni" disabled>
                 </div>
 
                 <hr>
@@ -113,41 +113,41 @@ $this->load->view('template/sidebar');
 
                 <div class="form-group">
                   <label for="areaTerbakar">Area Yang Terbakar:</label>
-                  <input type="text" value="<?php echo $detail['areaTerbakar']; ?>" class="form-control" id="areaTerbakar"  name="areaTerbakar" required>
+                  <input type="text" value="<?php echo $detail['areaTerbakar']; ?>" class="form-control" id="areaTerbakar"  name="areaTerbakar" disabled>
                 </div>
 
                 <div class="form-group">
                   <label for="luasArea">Luas Area Yang Terbakar:</label>
-                  <input type="text" value="<?php echo $detail['luasArea']; ?>" class="form-control" id="luasArea"  name="luasArea" required>
+                  <input type="text" value="<?php echo $detail['luasArea']; ?>" class="form-control" id="luasArea"  name="luasArea" disabled>
                 </div>
                 
                 <label for="">Kerugian Harta Benda:</label> <br>
                 <label style="padding-left:5em" for="asetKeseluruhan">Nilai Aset Keseluruhan:</label>
                 <div class="input-group" style="padding-left:5em">
                     <span class="input-group-addon">Rp</span>
-                    <input type="text" value="<?php echo $detail['asetKeseluruhan']; ?>" id="asetKeseluruhan" class="form-control" name="asetKeseluruhan">
+                    <input type="text" value="<?php echo $detail['asetKeseluruhan']; ?>" id="asetKeseluruhan" class="form-control" name="asetKeseluruhan" disabled>
                  </div> <br>
 
                 <label style="padding-left:5em" for="asetKeseluruhan">Nilai Kerugian:</label>
                 <div class="input-group" style="padding-left:5em">
                     <span class="input-group-addon">Rp</span>
-                    <input type="text" value="<?php echo $detail['nilaiKerugian']; ?>" id="nilaiKerugian" class="form-control" name="nilaiKerugian">
+                    <input type="text" value="<?php echo $detail['nilaiKerugian']; ?>" id="nilaiKerugian" class="form-control" name="nilaiKerugian" disabled>
                  </div> <br>
 
                 <label style="padding-left:5em" for="asetKeseluruhan">Nilai Aset Yang Terselamatkan:</label>
                 <div class="input-group" style="padding-left:5em">
                     <span class="input-group-addon">Rp</span>
-                    <input type="text" value="<?php echo $detail['asetTerselamatkan']; ?>" id="asetTerselamatkan" class="form-control" name="asetTerselamatkan">
+                    <input type="text" value="<?php echo $detail['asetTerselamatkan']; ?>" id="asetTerselamatkan" class="form-control" name="asetTerselamatkan" disabled>
                  </div> <br>
                 
                  <div class="form-group">
                   <label for="luka">Korban Luka:</label>
-                  <input type="number" value="<?php echo $detail['luka']; ?>" class="form-control" id="luka"  name="luka" required>
+                  <input type="number" value="<?php echo $detail['luka']; ?>" class="form-control" id="luka"  name="luka" disabled>
                  </div>
 
                  <div class="form-group">
                   <label for="meninggal">Korban Meninggal:</label>
-                  <input type="number" value="<?php echo $detail['meninggal']; ?>" class="form-control" id="meninggal"  name="meninggal" required>
+                  <input type="number" value="<?php echo $detail['meninggal']; ?>" class="form-control" id="meninggal"  name="meninggal" disabled>
                  </div>
 
                 <hr>
@@ -156,17 +156,17 @@ $this->load->view('template/sidebar');
 
                 <div class="form-group">
                   <label> Jumlah Unit Mobil:</label>
-                  <input type="number" value="<?php echo $detail['jumlahMobil']; ?>" class="form-control" id="jumlahMobil"  name="jumlahMobil" required>
+                  <input type="number" value="<?php echo $detail['jumlahMobil']; ?>" class="form-control" id="jumlahMobil"  name="jumlahMobil" disabled>
                 </div>
 
                 <div class="form-group">
                   <label for="meninggal">Nomor Polisi:</label>
-                  <input type="text" value="<?php echo $detail['nomorPolisi']; ?>" class="form-control" id="nomorPolisi"  name="nomorPolisi" required>
+                  <input type="text" value="<?php echo $detail['nomorPolisi']; ?>" class="form-control" id="nomorPolisi"  name="nomorPolisi" disabled>
                 </div>
 
                 <div class="form-group">
                   <label for="meninggal">Jumlah Petugas:</label>
-                  <input type="number" value="<?php echo $detail['jumlahPetugas']; ?>" class="form-control" id="jumlahPetugas"  name="jumlahPetugas" required>
+                  <input type="number" value="<?php echo $detail['jumlahPetugas']; ?>" class="form-control" id="jumlahPetugas"  name="jumlahPetugas" disabled>
                 </div>
 
                 <label for="">Regu Piket:</label>
