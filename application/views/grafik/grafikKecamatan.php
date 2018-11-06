@@ -13,7 +13,7 @@ $this->load->view('template/sidebar');
             $kec[] = $hasil->nama;
             $jum[] = (integer)$hasil->jumlah;
             if(!isset($tanggal)){
-                $tanggalKet = "Seluruh Kecamatan";
+                $tanggalKet = "Laporan Penanggulangan Kebakaran Per-Kecamatan Selama Tahun ".date("Y");
             }else {
                 $tanggalKet = $tanggal;
             }
@@ -26,8 +26,8 @@ $this->load->view('template/sidebar');
     ?>
 <section class="content-header">
     <h1>
-        Blank page
-        <small>it all starts here</small>
+        Laporan Per-Kecamatan
+        
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -98,15 +98,12 @@ $this->load->view('template/sidebar');
         <a href="<?php base_url('Grafik/grafikKecamatan');?>" class="btn btn-default">Reset</a>
     
         </div><!-- /.box-body -->
-        <div class="box-footer">
-            Footer
-        </div><!-- /.box-footer-->
     </div><!-- /.box -->
 
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Title</h3>
+            <h3 class="box-title">Laporan Kejadian Kebakaran</h3>
             <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                 <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
@@ -132,6 +129,7 @@ $this->load->view('template/sidebar');
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
  
  <script>
+ 
  new Chart(document.getElementById("grafik"), {
     type: 'bar',
     data: {
@@ -139,7 +137,8 @@ $this->load->view('template/sidebar');
       datasets: [
         {
           label: "Jumlah Kebakaran",
-          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#ff0000",
+          "#00FF00","#0000FF","#FFFF00","#00FFFF",""],
           data: <?php echo json_encode($jum); ?>
         }
       ]

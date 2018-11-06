@@ -8,15 +8,18 @@ $this->load->view('template/sidebar');
 ?>
 <!-- Content Header (Page header) -->
 <?php
+$nilaiKerugian = 0;
+$total =0;
+$nilaiAset =0;
     if ($data!=null) {
         foreach($data as $hasil){
             $jenis[] = $hasil->jenisBangunan;
             $jumlah[] = (integer)$hasil->jenis;
-            $total = $hasil->totalJumlah;
-            $nilaiKerugian = "Rp " . number_format($hasil->totalKerugian,2,',','.');
-            $nilaiAset = "Rp " . number_format($hasil->totalAset,2,',','.');
+            $total = $total+$hasil->jenis;
+            $nilaiKerugian = $nilaiKerugian+$hasil->totalKerugian;
+            $nilaiAset = $nilaiAset+$hasil->asetTerselamatkan;
             if(!isset($tanggal)){
-                $tanggalKet = "Seluruh Laporan Kebakaran";
+                $tanggalKet = "Selama Tahun ".date("Y");
             }else {
                 $tanggalKet = $tanggal;
             }
@@ -29,8 +32,8 @@ $this->load->view('template/sidebar');
     ?>
 <section class="content-header">
     <h1>
-        Blank page
-        <small>it all starts here</small>
+        Grafik Kebakaran
+        
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -101,15 +104,12 @@ $this->load->view('template/sidebar');
         <a href="<?php base_url('Grafik/grafikKebakaran');?>" class="btn btn-default">Reset</a>
     
         </div><!-- /.box-body -->
-        <div class="box-footer">
-            Footer
-        </div><!-- /.box-footer-->
     </div><!-- /.box -->
 
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Title</h3>
+            <h3 class="box-title">Laporan Penanggulangan Kejadian Kebakaran</h3>
             <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                 <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
@@ -123,12 +123,12 @@ $this->load->view('template/sidebar');
         ?>
           <canvas id="grafik" height=100></canvas>
           <p align="center"><b>Jumlah Total: <?php echo $total; ?></b></p>
-          <h4  class="box-title">Nilai Kerugian:&nbsp; <?php echo $nilaiKerugian; ?></h4>
-          <h4  class="box-title">Nilai Aset Terselamatkan:&nbsp; <?php echo $nilaiAset; ?></h4>
+          <h4  class="box-title">Nilai Kerugian:&nbsp; <?php echo "Rp " . number_format($nilaiKerugian,2,',','.'); ?></h4>
+          <h4  class="box-title">Nilai Aset Terselamatkan:&nbsp; <?php echo "Rp " . number_format($nilaiAset,2,',','.'); ?></h4>
         <?php } ?>
         </div><!-- /.box-body -->
         <div class="box-footer">
-            Footer
+            Damkar Soreang
         </div><!-- /.box-footer-->
     </div><!-- /.box -->
 

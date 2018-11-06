@@ -4,7 +4,7 @@
     <div class="wrapper">
 
         <header class="main-header">
-            <a href="#" class="logo"><b>Admin</b>LTE</a>
+            <a href="#" class="logo"><b>Damkar</b>Soreang</a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
@@ -28,7 +28,7 @@
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
                                         <li><!-- start message -->
-                                            <a href="#">
+                                            <!-- <a href="#">
                                                 <div class="pull-left">
                                                     <img src="<?php echo base_url('assets/AdminLTE-2.0.5/dist/img/user2-160x160.jpg') ?>" class="img-circle" alt="User Image"/>
                                                 </div>
@@ -37,7 +37,7 @@
                                                     <small><i class="fa fa-clock-o"></i> 5 mins</small>
                                                 </h4>
                                                 <p>Why not buy a new awesome theme?</p>
-                                            </a>
+                                            </a> -->
                                         </li><!-- end message -->
                                     </ul>
                                 </li>
@@ -54,13 +54,13 @@
                                 <li class="header">You have 10 notifications</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
-                                    <ul class="menu">
+                                    <!-- <ul class="menu">
                                         <li>
                                             <a href="#">
                                                 <i class="fa fa-users text-aqua"></i> 5 new members joined today
                                             </a>
                                         </li>
-                                    </ul>
+                                    </ul> -->
                                 </li>
                                 <li class="footer"><a href="#">View all</a></li>
                             </ul>
@@ -77,7 +77,7 @@
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
                                         <li><!-- Task item -->
-                                            <a href="#">
+                                            <!-- <a href="#">
                                                 <h3>
                                                     Design some buttons
                                                     <small class="pull-right">20%</small>
@@ -87,7 +87,7 @@
                                                         <span class="sr-only">20% Complete</span>
                                                     </div>
                                                 </div>
-                                            </a>
+                                            </a> -->
                                         </li><!-- end task item -->
                                     </ul>
                                 </li>
@@ -100,14 +100,14 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="<?php echo base_url('assets/AdminLTE-2.0.5/dist/img/user2-160x160.jpg') ?>" class="user-image" alt="User Image"/>
-                                <span class="hidden-xs">Alexander Pierce</span>
+                                <span class="hidden-xs">Wahyu</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
                                     <img src="<?php echo base_url('assets/AdminLTE-2.0.5/dist/img/user2-160x160.jpg') ?>" class="img-circle" alt="User Image" />
                                     <p>
-                                        Alexander Pierce - Web Developer
+                                        Wahyu - Web Developer
                                         <small>Member since Nov. 2012</small>
                                     </p>
                                 </li>

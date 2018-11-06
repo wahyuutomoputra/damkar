@@ -17,7 +17,7 @@ class Grafik extends CI_Controller {
 			$bulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
 			$dari = intval($this->input->post('dari')) - 1;
 			$sampai = intval($this->input->post('sampai')) - 1;
-			$x['tanggal'] = "Laporan Penanggulangan Kejadian Kebakaran selama bulan "
+			$x['tanggal'] = "Selama bulan "
 						.$bulan[$dari]." - "
 						.$bulan[$sampai]." Tahun "
 						.$this->input->post('tahun');

@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>AdminLTE 2 | Log in</title>
+        <title>Damkar | Soreang</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- Bootstrap 3.3.2 -->
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css" />
@@ -23,7 +23,7 @@
     <body class="login-page">
         <div class="login-box">
             <div class="login-logo">
-                <a href="#"><b>Admin</b>LTE</a>
+                <a href="#"><b>Damkar</b>Soreang</a>
             </div><!-- /.login-logo -->
             <div class="login-box-body">
                 <p class="login-box-msg">Sign in to start your session</p>
@@ -45,19 +45,15 @@
                             </div>                        
                         </div><!-- /.col -->
                         <div class="col-xs-4">
-                            <input type="submit" value="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                            <input type="submit" value="submit" class="btn btn-primary btn-block btn-flat"></button>
                         </div><!-- /.col -->
                     </div>
                 </form>
 
-                <div class="social-auth-links text-center">
-                    <p>- OR -</p>
-                    <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using Facebook</a>
-                    <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
-                </div><!-- /.social-auth-links -->
+                
 
                 <a href="#">I forgot my password</a><br>
-                <a href="register.html" class="text-center">Register a new membership</a>
+              
 
             </div><!-- /.login-box-body -->
         </div><!-- /.login-box -->

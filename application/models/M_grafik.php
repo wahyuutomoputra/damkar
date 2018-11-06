@@ -10,22 +10,21 @@ class M_grafik extends CI_Model
             $tahun = $this->input->post('tahun');
             
             $query = $this->db->query(
-            "SELECT DISTINCT ambil.jenisBangunan,count(jenisBangunan) AS jenis, SUM(jenis) AS totalJumlah, SUM(nilaiKerugian) AS totalKerugian, SUM(asetTerselamatkan) As totalAset
-            FROM (SELECT DISTINCT jenisBangunan,count(jenisBangunan) AS jenis, nilaiKerugian, asetTerselamatkan FROM Berita_Acara
+            "SELECT DISTINCT jenisBangunan,count(jenisBangunan) AS jenis,nilaiKerugian  AS totalKerugian,asetTerselamatkan
+            FROM Berita_Acara 
             WHERE MONTH(tanggal) BETWEEN $dari AND $sampai AND YEAR(tanggal) = $tahun
-            GROUP BY jenisBangunan,nilaiKerugian,asetTerselamatkan) AS ambil
-            GROUP BY ambil.jenisBangunan");
+            GROUP BY jenisBangunan,nilaiKerugian,asetTerselamatkan");
 
         }else {
-            $query = $this->db->query(
-            "SELECT DISTINCT ambil.jenisBangunan,count(jenisBangunan) AS jenis, SUM(jenis) AS totalJumlah, SUM(nilaiKerugian) AS totalKerugian, SUM(asetTerselamatkan) As totalAset
-            FROM (SELECT DISTINCT jenisBangunan,count(jenisBangunan) AS jenis, nilaiKerugian, asetTerselamatkan FROM Berita_Acara
-            GROUP BY jenisBangunan,nilaiKerugian,asetTerselamatkan) AS ambil
-            GROUP BY ambil.jenisBangunan");
+            $query = $this->db->query("SELECT DISTINCT ambil.jenisBangunan,count(jenisBangunan) AS jenis, ambil.nilaiKerugian AS totalKerugian, ambil.asetTerselamatkan
+            FROM (SELECT DISTINCT jenisBangunan,count(jenisBangunan) AS jenis,nilaiKerugian,asetTerselamatkan
+            FROM Berita_Acara WHERE YEAR(tanggal) = YEAR(CURDATE())
+            GROUP BY jenisBangunan,nilaiKerugian,asetTerselamatkan,nilaiKerugian,asetTerselamatkan) AS ambil 
+            GROUP BY ambil.jenisBangunan, ambil.nilaiKerugian, ambil.asetTerselamatkan");
         }
         
-
         if($query->num_rows() > 0){
+            $a=0;
             foreach($query->result() as $data){
                 $hasil[] = $data;
             }
@@ -43,15 +42,22 @@ class M_grafik extends CI_Model
             $sampai = $this->input->post('sampai');
             $tahun = $this->input->post('tahun');
 
-            $query = $this->db->query("SELECT kecamatan,count(kecamatan) AS jumlah FROM Berita_Acara
+            $query = $this->db->query("SELECT k.nama,count(ba.idKecamatan) AS jumlah
+            FROM kecamatan k JOIN Berita_Acara ba ON k.idKecamatan = ba.idKecamatan
             WHERE MONTH(tanggal) BETWEEN $dari AND $sampai AND YEAR(tanggal) = $tahun
-            GROUP BY kecamatan 
-            ORDER BY kecamatan ASC");
+            GROUP BY k.nama ORDER BY k.nama ASC");
         }else {
-            $query = $this->db->query("SELECT k.nama,IFNULL(count(ba.idKecamatan),0) AS jumlah
+            $query = $this->db->query("SELECT k.nama,count(ba.idKecamatan) AS jumlah
             FROM kecamatan k JOIN Berita_Acara ba ON k.idKecamatan = ba.idKecamatan
             GROUP BY k.nama ORDER BY k.nama ASC");
         }
+        // $query = $this->db->query("SELECT k.nama,IFNULL(count(ba.idKecamatan),0) AS jumlah
+        //     FROM kecamatan k LEFT JOIN Berita_Acara ba ON k.idKecamatan = ba.idKecamatan
+        //     GROUP BY k.nama ORDER BY k.nama ASC");
+        // $query = $this->db->query("SELECT k.nama,IFNULL(count(ba.idKecamatan),0) AS jumlah
+        //     FROM kecamatan k LEFT JOIN Berita_Acara ba ON k.idKecamatan = ba.idKecamatan
+        //     WHERE IFNULL(MONTH(tanggal),$dari) BETWEEN $dari AND $sampai AND IFNULL(YEAR(tanggal),$tahun) = $tahun
+        //     GROUP BY k.nama ORDER BY k.nama ASC");
 
         if($query->num_rows() > 0){
             foreach($query->result() as $data){
