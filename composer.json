@@ -3,7 +3,9 @@
 	"name" : "codeigniter/framework",
 	"license": "MIT",
 	"require": {
-		"php": ">=5.2.4"
+		"php": ">=5.2.4",
+		"pusher/pusher-php-server": "^3.3",
+		"mpdf/mpdf": "^7.1"
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.*"

@@ -30,14 +30,14 @@ class Auth extends CI_Controller {
 			
 			if (password_verify($pass,$password))
 			{
-				$_SESSION['nip'] = $nip;
-				//$this->session->set_userdata('nip',$nip);
-				
+				$_SESSION['nip'] = $data['nip'];
+				$_SESSION['nama'] = $data['nama'];
+				$_SESSION['status'] = $data['status'];
+				$_SESSION['password'] = $password;
 				redirect('Dashboard/index');
 			}else {
 				echo "Password Salah";
-			}$this->session->set_userdata('nip','isi');
-			redirect('Dashboard/index');
+			}
 		}else {
 			echo "NIP salah";
 		}
@@ -53,6 +53,12 @@ class Auth extends CI_Controller {
 	{
 		session_destroy();
 		redirect('Auth');
+	}
+
+	public function reset_password()
+	{	
+		$data = $this->M_auth->reset();
+		echo json_encode($data);
 	}
         
 }

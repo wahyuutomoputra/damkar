@@ -9,8 +9,8 @@ $this->load->view('template/sidebar');
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Blank page
-        <small>it all starts here</small>
+        Halaman Utama
+        
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -33,7 +33,7 @@ $this->load->view('template/sidebar');
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?php echo site_url('BeritaAcara/tampil_beritaAcara/hari')?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div><!-- ./col -->
         <div class="col-lg-3 col-xs-6">
@@ -46,7 +46,7 @@ $this->load->view('template/sidebar');
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?php echo site_url('BeritaAcara/tampil_beritaAcara/bulan')?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div><!-- ./col -->
         <div class="col-lg-3 col-xs-6">
@@ -59,7 +59,7 @@ $this->load->view('template/sidebar');
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?php echo site_url('BeritaAcara/tampil_beritaAcara/tahun')?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div><!-- ./col -->
         

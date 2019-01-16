@@ -36,13 +36,11 @@ $this->load->view('template/sidebar');
             </div>
         </div>
         <div class="box-body">
-        <?php echo form_open('BeritaAcara/input'); ?>
+        <?php echo form_open_multipart('BeritaAcara/input'); ?>
             <form role="form">
             <div class="box-body">
             <label for="exampleInputEmail1">I. Data & Infomasi</label>
-            <hr>
-            
-            
+            <hr>            
                 <div class="form-group">
                     <label for="informasiDiterima">Informasi diterima pukul:</label>
                     <div class='input-group date'>
@@ -212,7 +210,22 @@ $this->load->view('template/sidebar');
                   <label for="meninggal">Danton II:</label>
                   <input type="text" class="form-control" id="danton2"  name="danton2" >
                 </div>
-                
+
+                <div class="form-group">
+                  <label for="exampleInputFile">Gambar 1</label> <br>
+                  <img id="preview1" src="<?php echo base_url('assets/image/preview.jpg') ?>" width="100" height="100"> <br>
+                  <input type="file" name="gambar1" id="gambar1" onchange="document.getElementById('preview1').src = window.URL.createObjectURL(this.files[0])">
+
+                  <p class="help-block">*File maksimal 2 MB</p>
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInputFile">Gambar 2</label> <br>
+                  <img id="preview2" src="<?php echo base_url('assets/image/preview.jpg') ?>" width="100" height="100"> <br>
+                  <input type="file" name="gambar2" id="gambar2" onchange="document.getElementById('preview2').src = window.URL.createObjectURL(this.files[0])">
+
+                  <p class="help-block">*File maksimal 2 MB</p>
+                </div>
                 <button type="submit" class="btn btn-info pull-right">Kirirm</button>
                 <br>
             </div>
@@ -232,9 +245,7 @@ $this->load->view('template/js');
 <script src="<?php echo base_url('assets/datetimepicker/timepicker.min.js') ?>" type="text/javascript"></script>
 <script src="<?php echo base_url('assets/datetimepicker/moment-with-locales.js') ?>" type="text/javascript"></script>
 <script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
-        
-        
-        <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+<script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
 <script>
 
     $(document).ready(function(){

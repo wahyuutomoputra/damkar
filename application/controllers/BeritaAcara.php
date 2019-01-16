@@ -26,9 +26,10 @@ class BeritaAcara extends CI_Controller {
     }
 
     //tampilkan berita acara
-    public function tampil_beritaAcara()
+    public function tampil_beritaAcara($params="")
     {
-        $this->load->view('beritaAcara/tampil_beritaAcara');
+        $data['filter'] = $params;
+        $this->load->view('beritaAcara/tampil_beritaAcara',$data);
     }
 
     //tampilkan detail berita acara
@@ -40,19 +41,21 @@ class BeritaAcara extends CI_Controller {
     }
 
     
-    public function get_data_beritaAcara()
+    public function get_data_beritaAcara($filter)
     {
-        $list = $this->M_berita_acara->get_datatables();
+        $list = $this->M_berita_acara->get_datatables($filter);
         $data = array();
         $no = $_POST['start'];
-        $hari = array ( 1 =>    'Senin',
-				'Selasa',
-				'Rabu',
-				'Kamis',
-				'Jumat',
-				'Sabtu',
-				'Minggu'
-			);
+        $hari = array ( 1 => 'Senin',
+            'Selasa',
+            'Rabu',
+            'Kamis',
+            'Jumat',
+            'Sabtu',
+            'Minggu'
+        );
+
+
         foreach ($list as $field) {
             $no++;
             $row = array();
@@ -76,6 +79,20 @@ class BeritaAcara extends CI_Controller {
         //output dalam format JSON
         echo json_encode($output);
     
+    }
+
+    public function update()
+    {
+        $id = $this->input->post('id');
+        $update = $this->M_berita_acara->update($id);
+        if ($update) {
+            redirect('BeritaAcara/detail_beritaAcara/'.$id);
+        }
+    }
+
+    public function cetak($id)
+    {
+        $this->M_berita_acara->cetak($id);
     }
         
 }

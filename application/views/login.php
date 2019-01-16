@@ -12,6 +12,7 @@
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/dist/css/AdminLTE.min.css') ?>" rel="stylesheet" type="text/css" />
         <!-- iCheck -->
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/iCheck/square/blue.css') ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo base_url('assets/loading/loading.css') ?>" rel="stylesheet" type="text/css" />
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,11 +39,11 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-8">    
-                            <div class="checkbox icheck">
+                            <!-- <div class="checkbox icheck">
                                 <label>
                                     <input type="checkbox"> Remember Me
                                 </label>
-                            </div>                        
+                            </div>   -->                      
                         </div><!-- /.col -->
                         <div class="col-xs-4">
                             <input type="submit" value="submit" class="btn btn-primary btn-block btn-flat"></button>
@@ -52,11 +53,36 @@
 
                 
 
-                <a href="#">I forgot my password</a><br>
+                <a data-toggle="modal" href="#ModalaAdd">Lupa Password</a><br>
               
 
             </div><!-- /.login-box-body -->
         </div><!-- /.login-box -->
+
+        <div class="modal fade" id="ModalaAdd" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Masukkan Nip</h4>
+            </div>
+            <form class="form-horizontal" name="postForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-xs-3" >NIP</label>
+                        <div class="col-xs-9">
+                            <input name="nip" id="nip" class="form-control" type="text" placeholder="NIP" style="width:335px;" required>
+                        </div>
+                    </div>  
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>
+                    <button class="btn btn-info" id="btn_simpan">Kirim</button>
+                </div>
+            </form>
+            </div>
+            </div>
+    </div>
 
         <!-- jQuery 2.1.3 -->
         <script src="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/jQuery/jQuery-2.1.3.min.js') ?>"></script>
@@ -64,7 +90,36 @@
         <script src="<?php echo base_url('assets/AdminLTE-2.0.5/bootstrap/js/bootstrap.min.js') ?>" type="text/javascript"></script>
         <!-- iCheck -->
         <script src="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/iCheck/icheck.min.js') ?>" type="text/javascript"></script>
-        <script>
+        <script src="<?php echo base_url('assets/sweetalert/sweetalert.min.js') ?>" type="text/javascript"></script>
+        <script src="<?php echo base_url('assets/loading/loading.js') ?>" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                    $('#btn_simpan').on('click',function(){
+                    $('#ModalaAdd').loading({
+                        message: 'Loading...'
+                    });
+                    var postForm = { 
+                    // yg 'nama' itu ntar yg di panggil di model, yg ->input->post()
+                    'nip'      : $('#nip').val(),
+                    };
+                   
+                    $.ajax({
+                        type : "POST",
+                        url  : "<?php echo base_url('Auth/reset_password')?>",
+                        dataType : "JSON",
+                        data : postForm,
+                        success: function(data){
+                            $('[name="nip"]').val("");
+                            $('#ModalaAdd').loading('stop');
+                            $('#ModalaAdd').modal('hide');
+                            swal("Password berhasil dirubah", "Silakan periksa email anda", "success");
+                        }
+                    });
+                    return false;
+                });
+            }); 
+        </script>
+       <!--  <script>
             $(function () {
                 $('input').iCheck({
                     checkboxClass: 'icheckbox_square-blue',
@@ -72,6 +127,6 @@
                     increaseArea: '20%' // optional
                 });
             });
-        </script>
+        </script> -->
     </body>
 </html>

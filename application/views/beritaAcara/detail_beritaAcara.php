@@ -35,11 +35,11 @@ $this->load->view('template/sidebar');
             </div>
         </div>
         <div class="box-body">
-        
+        <?php echo form_open_multipart('BeritaAcara/update'); ?>
             <form role="form">
-            <div class="box-body">
             <label for="exampleInputEmail1">I. Data & Infomasi</label>
             <hr>
+                <input type="hidden" name="id" value="<?php echo $detail['id']; ?>"> 
             
                 <div class="form-group">
                   <label for="informasiDiterima">Informasi diterima pukul:</label>
@@ -69,25 +69,25 @@ $this->load->view('template/sidebar');
                 <label >Alamat:</label>
                 <div class="form-group" style="padding-left:5em">&nbsp;
                     <label  for="">Rt</label><br>&nbsp;
-                    <input type="number" value="<?php echo $detail['rt']; ?>" name="rt" disabled><br>&nbsp;
+                    <input type="number" value="<?php echo $detail['rt']; ?>" id="rt" name="rt" disabled><br>&nbsp;
 
                     <label  for="">Rw</label><br>&nbsp;
-                    <input type="number" value="<?php echo $detail['rw']; ?>" name="rw" disabled><br>&nbsp;
+                    <input type="number" value="<?php echo $detail['rw']; ?>" id="rw" name="rw" disabled><br>&nbsp;
 
                     <label  for="">Kampung</label><br>&nbsp;
-                    <input type="text" value="<?php echo $detail['kampung']; ?>" name="kampung" disabled><br>&nbsp;
+                    <input type="text" value="<?php echo $detail['kampung']; ?>" id="kampung" name="kampung" disabled><br>&nbsp;
 
                     <label  for="">Desa/Kelurahan</label><br>&nbsp;
-                    <input type="text" value="<?php echo $detail['desa']; ?>" name="desa" disabled><br>&nbsp;
+                    <input type="text" value="<?php echo $detail['desa']; ?>" id="desa" name="desa" disabled><br>&nbsp;
 
                     <label  for="">Kecamatan</label><br>&nbsp;
                     <select name="kecamatan" id="">
-                    <option value="<?php echo $detail['nama']; ?>"><?php echo $detail['nama']; ?></option>
+                    <option value="<?php echo $detail['idKecamatan']; ?>"><?php echo $detail['nama']; ?></option>
                     
                     </select><br>&nbsp;
 
                     <label  for="">Kab\Kota</label><br>&nbsp;
-                    <input type="text" value="<?php echo $detail['kota']; ?>" name="kota" disabled><br>&nbsp;
+                    <input type="text" value="<?php echo $detail['kota']; ?>" name="kota" id="kota" disabled><br>&nbsp;
                 </div>
 
                 <div class="form-group">
@@ -190,18 +190,37 @@ $this->load->view('template/sidebar');
                   <label for="meninggal">Danton II:</label>
                   <input type="text" value="<?php echo $detail['danton2']; ?>" class="form-control" id="danton2"  name="danton2" >
                 </div>
+
+                <div class="form-group">
+                  <label for="exampleInputFile">Gambar 1</label> <br>
+                  <img id="preview1" src="<?php echo base_url('uploads/'.$detail['gambar1']);?>" width="100" height="100"> <br>
+                   <input type="hidden" name="gambarLama1" value="<?php echo $detail['gambar1']; ?>">
+                  <input type="file" name="gambar1" id="gambar1" onchange="document.getElementById('preview1').src = window.URL.createObjectURL(this.files[0])">
+
+                  <p class="help-block">*File maksimal 2 MB</p>
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInputFile">Gambar 2</label> <br>
+                  <img id="preview2" src="<?php echo base_url('uploads/'.$detail['gambar2']);?>" width="100" height="100"> <br>
+                  <input type="hidden" name="gambarLama2" value="<?php echo $detail['gambar2']; ?>">
+                  <input type="file" name="gambar2" id="gambar2" onchange="document.getElementById('preview2').src = window.URL.createObjectURL(this.files[0])">
+
+                  <p class="help-block">*File maksimal 2 MB</p>
+                </div>
                 
                 <!-- <button type="submit" class="btn btn-info pull-right">Cetak</button> -->
-                <br>
-            </div>
+                <button type="submit" id="update" class="btn btn-info pull-right">Update Data</button>
+                <br> <br>
+            </form>
+            <button type="submit" id="Edit" class="btn btn-default" onclick="show()">Edit</button>
+            <button type="submit" id="Cancel" class="btn btn-default" onclick="disable()">Cancel</button>
             
         </div><!-- /.box-body -->
         <div class="box-footer">
-            Footer
+            <button id="cetak" class="btn btn-default pull-right" ><a href="<?php echo site_url('BeritaAcara/cetak').'/'.$detail['id'];?>" target="_blank">Cetak</a></button> <br> <br>
         </div><!-- /.box-footer-->
-        </form>
     </div><!-- /.box -->
-
 </section><!-- /.content -->
 
 <?php 
@@ -215,7 +234,73 @@ $this->load->view('template/js');
         $( '#asetKeseluruhan' ).mask('000.000.000.000', {reverse: true});
         $( '#asetTerselamatkan' ).mask('000.000.000.000', {reverse: true});
         $( '#nilaiKerugian' ).mask('000.000.000.000', {reverse: true});
+
+        document.getElementById('update').style.visibility = 'hidden';
+        document.getElementById('Cancel').style.visibility = 'hidden';
+
     });
+
+    function show(){
+        document.getElementById('update').style.visibility = 'visible';
+        document.getElementById('Cancel').style.visibility = 'visible';
+
+        document.getElementById("informasiDiterima").disabled = false;
+        document.getElementById("tibaDilokasi").disabled = false;
+        document.getElementById("selesaiPemadaman").disabled = false;
+        document.getElementById("tanggal").disabled = false;
+        document.getElementById("rt").disabled = false;
+        document.getElementById("rw").disabled = false;
+        document.getElementById("kampung").disabled = false;
+        document.getElementById("desa").disabled = false;
+        document.getElementById("kota").disabled = false;
+        document.getElementById("namaPemilik").disabled = false;
+        document.getElementById("jumlahPenghuni").disabled = false;
+        document.getElementById("areaTerbakar").disabled = false;
+        document.getElementById("luasArea").disabled = false;
+        document.getElementById("asetKeseluruhan").disabled = false;
+        document.getElementById("nilaiKerugian").disabled = false;
+        document.getElementById("asetTerselamatkan").disabled = false;
+        document.getElementById("luka").disabled = false;
+        document.getElementById("meninggal").disabled = false;
+        document.getElementById("jumlahMobil").disabled = false;
+        document.getElementById("jumlahPetugas").disabled = false;
+        document.getElementById("nomorPolisi").disabled = false;
+        document.getElementById("danru1").disabled = false;
+        document.getElementById("danru2").disabled = false;
+        document.getElementById("danton1").disabled = false;
+        document.getElementById("danton2").disabled = false;
+    }
+
+    function disable(){
+      document.getElementById('update').style.visibility = 'hidden';
+      document.getElementById('Cancel').style.visibility = 'hidden';
+
+        document.getElementById("informasiDiterima").disabled = true;
+        document.getElementById("tibaDilokasi").disabled = true;
+        document.getElementById("selesaiPemadaman").disabled = true;
+        document.getElementById("tanggal").disabled = true;
+        document.getElementById("rt").disabled = true;
+        document.getElementById("rw").disabled = true;
+        document.getElementById("kampung").disabled = true;
+        document.getElementById("desa").disabled = true;
+        document.getElementById("kota").disabled = true;
+        document.getElementById("namaPemilik").disabled = true;
+        document.getElementById("jumlahPenghuni").disabled = true;
+        document.getElementById("areaTerbakar").disabled = true;
+        document.getElementById("luasArea").disabled = true;
+        document.getElementById("asetKeseluruhan").disabled = true;
+        document.getElementById("nilaiKerugian").disabled = true;
+        document.getElementById("asetTerselamatkan").disabled = true;
+        document.getElementById("luka").disabled = true;
+        document.getElementById("meninggal").disabled = true;
+        document.getElementById("jumlahMobil").disabled = true;
+        document.getElementById("jumlahPetugas").disabled = true;
+        document.getElementById("nomorPolisi").disabled = true;
+        document.getElementById("danru1").disabled = true;
+        document.getElementById("danru2").disabled = true;
+        document.getElementById("danton1").disabled = true;
+        document.getElementById("danton2").disabled = true;
+    }
 
 </script>
 <!--tambahkan custom js disini-->

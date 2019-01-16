@@ -33,6 +33,7 @@ $this->load->view('template/sidebar');
         </div>
         <div class="box-body">
             Start creating your amazing application!
+            <input type="date" name="tgl">
         </div><!-- /.box-body -->
         <div class="box-footer">
             Footer

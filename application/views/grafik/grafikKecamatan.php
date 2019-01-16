@@ -115,7 +115,7 @@ $this->load->view('template/sidebar');
             echo "<b>Data tidak ditemukan</b>";
         }else{
         ?>
-          <canvas id="grafik" width="700" height="300"></canvas>
+          <canvas id="grafik" width="750" height="650"></canvas>
           
         <?php } ?>
         </div><!-- /.box-body -->
@@ -131,7 +131,7 @@ $this->load->view('template/sidebar');
  <script>
  
  new Chart(document.getElementById("grafik"), {
-    type: 'bar',
+    type: 'horizontalBar',
     data: {
       labels: <?php echo json_encode($kec); ?>,
       datasets: [

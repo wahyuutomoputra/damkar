@@ -4,6 +4,7 @@ $this->load->view('template/head');
 <!--tambahkan custom css disini-->
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+<link href="<?php echo base_url('assets/datatables.net-bs/css/buttons.dataTables.min.css') ?>" rel="stylesheet" type="text/css" />
 <?php
 $this->load->view('template/topbar');
 $this->load->view('template/sidebar');
@@ -11,8 +12,8 @@ $this->load->view('template/sidebar');
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Blank page
-        <small>it all starts here</small>
+        Berita Acara
+        <small>Kebakaran</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -23,6 +24,32 @@ $this->load->view('template/sidebar');
 
 <!-- Main content -->
 <section class="content">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Filter</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <form id="form-filter">
+            <div class="form-group">
+                <label for="Tahun">Dari Tanggal:</label>
+                <input type="date" class="form-control" id="min"  name="min" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Tahun">Sampai Tanggal:</label>
+                <input type="date" class="form-control" id="max"  name="max" required>
+            </div>
+
+            <button type="button" id="btn-filter" class="btn btn-primary pull-right">Cari</button>
+        </form> 
+        <button type="button" id="btn-reset" class="btn btn-default">Reset</button>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+
 
     <!-- Default box -->
     <div class="box">
@@ -33,45 +60,8 @@ $this->load->view('template/sidebar');
                 <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
             </div>
         </div>
-        <div class="box-body">
-        
-        <!-- <form id="form-filter" action="#" method="post">
-            <div class="form-group">
-                <label>Bulan:</label>
-                <select class="form-control" id="bulan" name="bulan"> 
-                    <option  >Pilih Bulan</option>
-                    <option value="1">Januari</option>
-                    <option value="2">Februari</option>
-                    <option value="3">Maret</option>
-                    <option value="4">April</option>
-                    <option value="5">Mei</option>
-                    <option value="6">Juni</option>
-                    <option value="7">Juli</option>
-                    <option value="8">Agustus</option>
-                    <option value="9">September</option>
-                    <option value="10">Oktober</option>
-                    <option value="11">November</option>
-                    <option value="12">Desember</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="Tahun">Tahun:</label>
-                <input type="number" class="form-control" id="Tahun"  name="Tahun">
-            </div>
-        
-            <div class="form-group">
-                <label for="LastName" class="col-sm-2 control-label"></label>
-                <div class="col-sm-4">
-                    <button type="button" id="btn-filter" class="btn btn-primary">Filter</button>
-                    <button type="button" id="btn-reset" class="btn btn-default">Reset</button>
-                </div>
-            </div>
-        </form> -->
-            
-            <br><hr>
-           
-            <table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+        <div class="box-body table-responsive">
+            <table id="table" class="table table-striped table-bordered table-hover " cellspacing="0" width="100%">
                 <thead>
                     <tr>
                         <th>NO</th>
@@ -111,43 +101,83 @@ $this->load->view('template/js');
 <!--tambahkan custom js disini-->
 <script src="<?php echo base_url('assets/datatables.net/js/jquery.dataTables.min.js') ?>" type="text/javascript"></script>
 <script src="<?php echo base_url('assets/datatables.net-bs/js/dataTables.bootstrap.min.js') ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/datatables.net-bs/js/dataTables.buttons.min.js') ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/datatables.net-bs/js/buttons.flash.min.js') ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/datatables.net-bs/js/jszip.min.js') ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/datatables.net-bs/js/pdfmake.min.js') ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/datatables.net-bs/js/vfs_fonts.js') ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/datatables.net-bs/js/buttons.html5.min.js') ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/datatables.net-bs/js/buttons.print.min.js') ?>" type="text/javascript"></script>
 
 <script type="text/javascript">
     var table;
+
     $(document).ready(function() {
- 
+
+        var filtering = "<?php echo $filter; ?>";
+        var url_ba = "<?php echo site_url('BeritaAcara/get_data_beritaAcara/semua')?>";
+        if (filtering=="tahun") {
+            var url_ba = "<?php echo site_url('BeritaAcara/get_data_beritaAcara/tahun')?>";
+        }else if(filtering=="bulan"){
+            var url_ba = "<?php echo site_url('BeritaAcara/get_data_beritaAcara/bulan')?>";
+        }else if(filtering=="hari"){
+            var url_ba = "<?php echo site_url('BeritaAcara/get_data_beritaAcara/hari')?>";
+        }
+
+        
         //datatables
         table = $('#table').DataTable({ 
- 
+            "responsive": true,
             "processing": true, 
             "serverSide": true, 
-            "order": [], 
-             
+            "order": [],  
             "ajax": {
-                "url": "<?php echo site_url('BeritaAcara/get_data_beritaAcara')?>",
-                "type": "POST"
-                
-            
+                "url": url_ba,
+                "type": "POST",
+                "data": function(data){
+                    data.dariTgl = $('#min').val();
+                    data.sampaiTgl = $('#max').val();
+                }
             },
- 
-             
             "columnDefs": [
             { 
                 "targets": [ 0 ], 
                 "orderable": false, 
             },
             ],
- 
+            "dom": 'Bfrtip',
+            "buttons": [
+                'copy',
+                {
+                    "extend": 'excel',
+                    "messageTop": "Laporan kebakaran"
+                },
+                {
+                    "extend": 'pdf',
+                    "exportOptions": {
+                        "columns": [0, 1, 2, 3]
+                    },
+                    "messageBottom": null
+                },
+                {
+                    "extend": 'print',
+                    "exportOptions": {
+                        "columns": [0, 1, 2, 3]
+                    },
+                    " messageTop": "Laporan kebakaran",
+                    "messageBottom": null
+                }
+            ],
         });
 
-        // $('#btn-filter').click(function(){ //button filter event click
-        // table.ajax.reload();  //just reload table
-        // });
+        $('#btn-filter').click(function(){ //button filter event click
+            table.ajax.reload();  //just reload table
+        });
 
-        // $('#btn-reset').click(function(){ //button reset event click
-        //     $('#form-filter')[0].reset();
-        //     table.ajax.reload();  //just reload table
-        // });
+        $('#btn-reset').click(function(){ 
+            $('#form-filter')[0].reset();
+            table.ajax.reload();  
+        });
  
     });
  

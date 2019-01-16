@@ -14,10 +14,10 @@ $nilaiAset =0;
     if ($data!=null) {
         foreach($data as $hasil){
             $jenis[] = $hasil->jenisBangunan;
-            $jumlah[] = (integer)$hasil->jenis;
-            $total = $total+$hasil->jenis;
+            $jumlah[] = (integer)$hasil->jumlah;
+            $total = $total+$hasil->jumlah;
             $nilaiKerugian = $nilaiKerugian+$hasil->totalKerugian;
-            $nilaiAset = $nilaiAset+$hasil->asetTerselamatkan;
+            $nilaiAset = $nilaiAset+$hasil->totalTerselamatkan;
             if(!isset($tanggal)){
                 $tanggalKet = "Selama Tahun ".date("Y");
             }else {
@@ -126,6 +126,9 @@ $nilaiAset =0;
           <h4  class="box-title">Nilai Kerugian:&nbsp; <?php echo "Rp " . number_format($nilaiKerugian,2,',','.'); ?></h4>
           <h4  class="box-title">Nilai Aset Terselamatkan:&nbsp; <?php echo "Rp " . number_format($nilaiAset,2,',','.'); ?></h4>
         <?php } ?>
+        <button type="button" id="download-pdf2" >
+  Download Higher Quality PDF
+</button>
         </div><!-- /.box-body -->
         <div class="box-footer">
             Damkar Soreang
@@ -134,8 +137,9 @@ $nilaiAset =0;
 
 </section><!-- /.content -->
 <script src="<?php echo base_url('assets/ChartJs/Chart.min.js') ?>" type="text/javascript"></script>
- 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js" type="text/javascript"></script>
  <script>
+
  new Chart(document.getElementById("grafik"), {
     type: 'pie',
     data: {
@@ -193,6 +197,28 @@ $nilaiAset =0;
         
     }
 });
+
+ document.getElementById('download-pdf2').addEventListener("click", downloadPDF2);
+
+//download pdf form hidden canvas
+function downloadPDF2() {
+    var canvas = document.getElementById("grafik");
+    var win = window.open();
+    win.document.write("<br><img src='" + canvas.toDataURL() + "'/>");
+    win.print();
+    win.location.reload();
+  //   var newCanvas = document.querySelector('#grafik');
+
+  // //create image from dummy canvas
+  //   var newCanvasImg = newCanvas.toDataURL("image/jpeg", 1.0);
+  
+  //   //creates PDF from img
+  //   var doc = new jsPDF('landscape');
+  //   doc.setFontSize(20);
+  //   doc.text(15, 15, "Super Cool Chart");
+  //   doc.addImage(newCanvasImg, 'JPEG', 10, 10, 280, 150 );
+  //   doc.save('new-canvas.pdf');
+ }
 </script>
 
 <?php

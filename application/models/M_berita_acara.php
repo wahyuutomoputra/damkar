@@ -2,14 +2,37 @@
 
 class M_berita_acara extends CI_Model
 {
-    var $table = 'Berita_Acara';
+    var $table = 'berita_acara';
     var $column_order = array(null,'namaPemilik','desa','tanggal');
     var $column_search = array('namaPemilik','desa','tanggal');
     var $order = array('id' => 'asc');
 
-    public function insert()
+    function update($id)
     {
         $selisih = $this->hitung_selisih($this->input->post('informasiDiterima').":00",$this->input->post('tibaDilokasi').":00");
+        $this->load->library('upload');
+        $config['upload_path']          = './uploads/';
+        $config['allowed_types']        = 'gif|jpg|png';
+        $config['max_size']             = 5000;
+        $config['max_width']            = 5000;
+        $config['max_height']           = 5000;
+        $namaGambar = array("index0");
+        $date = date_create();
+        //ini buat nyari kalo nama gambar sebelumnya ama yg baru sama ya gausah di unnlink
+        for ($i=1; $i <=2 ; $i++) { 
+            $namaBaru = date_format($date, 'U').",,".preg_replace('/\s+/', '', $_FILES['gambar'.$i]['name']);
+
+            if ($_FILES['gambar'.$i]['name']) {
+                array_push($namaGambar,$namaBaru);
+                unlink(FCPATH . 'uploads/' . $this->input->post('gambarLama'.$i));
+                $config['file_name'] = $namaBaru;
+                $this->upload->initialize($config);
+                $this->upload->do_upload('gambar'.$i);
+            }else{
+                 array_push($namaGambar,$this->input->post('gambarLama'.$i));
+            }
+        }
+        
 
         $data = array(
             'informasiDiterima' => $this->input->post('informasiDiterima'),
@@ -40,9 +63,67 @@ class M_berita_acara extends CI_Model
             'danru2' => $this->input->post('danru2'),
             'danton1' => $this->input->post('danton1'),
             'danton2' => $this->input->post('danton2'),
+            'gambar1' => $namaGambar[1],
+            'gambar2' => $namaGambar[2],
+        );
+        $this->db->where('id', $id);
+        return $this->db->update('berita_acara', $data);
+    }
+
+    public function insert()
+    {
+        $selisih = $this->hitung_selisih($this->input->post('informasiDiterima').":00",$this->input->post('tibaDilokasi').":00");
+        $this->load->library('upload');
+        $config['upload_path']          = './uploads/';
+        $config['allowed_types']        = 'gif|jpg|png';
+        $config['max_size']             = 5000;
+        $config['max_width']            = 5000;
+        $config['max_height']           = 5000;
+        $namaGambar = array("index0");
+        $date = date_create();
+        
+        for ($i=1; $i <= 2; $i++) {
+            $namaBaru = date_format($date, 'U').",,".preg_replace('/\s+/', '', $_FILES['gambar'.$i]['name']);
+            array_push($namaGambar,$namaBaru);
+            $config['file_name'] = $namaBaru;
+            $this->upload->initialize($config);
+            $this->upload->do_upload('gambar'.$i);
+        }
+
+        $data = array(
+            'informasiDiterima' => $this->input->post('informasiDiterima'),
+            'tibaDilokasi' => $this->input->post('tibaDilokasi'),
+            'selesaiPemadaman' => $this->input->post('selesaiPemadaman'),
+            'responTime' => $selisih,
+            'tanggal' => $this->input->post('tanggal'),
+            'rt' => $this->input->post('rt'),
+            'rw' => $this->input->post('rw'),
+            'kampung' => $this->input->post('kampung'),
+            'desa' => $this->input->post('desa'),
+            'idKecamatan' => $this->input->post('kecamatan'),
+            'kota' => $this->input->post('kota'),
+            'namaPemilik' => $this->input->post('namaPemilik'),
+            'jumlahPenghuni' => $this->input->post('jumlahPenghuni'),
+            'jenisBangunan' => $this->input->post('jenisBangunan'),
+            'areaTerbakar' => $this->input->post('areaTerbakar'),
+            'luasArea' => $this->input->post('luasArea'),
+            'asetKeseluruhan' => str_replace(".", "",$this->input->post('asetKeseluruhan')),
+            'nilaiKerugian' => str_replace(".", "",$this->input->post('nilaiKerugian')),
+            'asetTerselamatkan' => str_replace(".", "",$this->input->post('asetTerselamatkan')),
+            'luka' => $this->input->post('luka'),
+            'meninggal' => $this->input->post('meninggal'),
+            'jumlahMobil' => $this->input->post('jumlahMobil'),
+            'nomorPolisi' => $this->input->post('nomorPolisi'),
+            'jumlahPetugas' => $this->input->post('jumlahPetugas'),
+            'danru1' => $this->input->post('danru1'),
+            'danru2' => $this->input->post('danru2'),
+            'danton1' => $this->input->post('danton1'),
+            'danton2' => $this->input->post('danton2'),
+            'gambar1' => $namaGambar[1],
+            'gambar2' => $namaGambar[2],
         );
         
-        return $this->db->insert('Berita_Acara', $data);
+        return $this->db->insert('berita_acara', $data);
     }
 
     private function hitung_selisih($jam_terima,$jam_tiba)
@@ -76,21 +157,19 @@ class M_berita_acara extends CI_Model
     public function get_detail($id)
     {
         $this->db->select('*');
-        $this->db->from('Berita_Acara');
-        $this->db->join('kecamatan', 'kecamatan.idKecamatan = Berita_Acara.idKecamatan');
+        $this->db->from('berita_acara');
+        $this->db->join('kecamatan', 'kecamatan.idKecamatan = berita_acara.idKecamatan');
         $this->db->where('id', $id);
         return $this->db->get();
     }
 
     private function get_datatables_query()
     {
-        // if($this->input->post('Tahun'))
-        // {
-        //     //$tgl = $this->input->post('bulan');
-        //     //$this->db->query("select * from Berita_Acara where month(tanggal) = '$tgl'");
-        //     $this->db->where("DATE_FORMAT(tanggal,'%m')", $this->input->post('Tahun'));
-        // }
-
+        if($this->input->post('dariTgl'))
+        {
+            $this->db->where('tanggal BETWEEN "'. $this->input->post('dariTgl'). '" and "'. $this->input->post('sampaiTgl').'"');
+        }
+        
         $this->db->from($this->table);
         $i = 0;
 
@@ -125,11 +204,27 @@ class M_berita_acara extends CI_Model
         }
     }
 
-    function get_datatables()
+    function get_datatables($filter)
     {
         $this->get_datatables_query();
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
+        if ($filter=="tahun") {
+            $this->db->where("DATE_FORMAT(tanggal,'%Y')", date("Y"));
+        }else if($filter=="bulan"){
+            $month_num = date('m');
+            $month_name = date("F", mktime(0, 0, 0, $month_num, 10));
+            $condition = array("DATE_FORMAT(tanggal,'%M')"=>$month_name,
+                               "DATE_FORMAT(tanggal,'%Y')"=>date("Y"));
+            $this->db->where($condition);
+        }else if($filter=="hari"){
+            $month_num = date('m');
+            $month_name = date("F", mktime(0, 0, 0, $month_num, 10));
+            $condition = array("DATE_FORMAT(tanggal,'%M')"=>$month_name,
+                               "DATE_FORMAT(tanggal,'%Y')"=>date("Y"),
+                               "DATE_FORMAT(tanggal,'%d')"=>date("d"));
+            $this->db->where($condition);
+        }
         $query = $this->db->get();
         return $query->result();
 
@@ -146,6 +241,43 @@ class M_berita_acara extends CI_Model
     {
         $this->db->from($this->table);
         return $this->db->count_all_results();
+    }
+
+    public function cetak($id)
+    {
+        $data = $this->M_berita_acara->get_detail($id)->row_array();
+        $hari = array ( 1 => 'Senin',
+            'Selasa',
+            'Rabu',
+            'Kamis',
+            'Jumat',
+            'Sabtu',
+            'Minggu'
+        );
+
+        $tgl = $hari[date('N', strtotime($data['tanggal']))];
+
+        $document = file_get_contents(FCPATH . "bap/Pemadaman.rtf");
+        $document = str_replace("#informasiDiterima", $data['informasiDiterima'], $document);
+        $document = str_replace("#tibaDilokasi", $data['tibaDilokasi'], $document);
+        $document = str_replace("#selesaiPemadaman",  $data['selesaiPemadaman'], $document);
+        $document = str_replace("#responTime",  $data['responTime'], $document);
+        $document = str_replace("#tanggal",  $data['tanggal'], $document);
+        $document = str_replace("#hari", $tgl , $document);
+        $document = str_replace("#rt",  $data['rt'], $document);
+        $document = str_replace("#rw",  $data['rw'], $document);
+        $document = str_replace("#kampung",  $data['kampung'], $document);
+        $document = str_replace("#desa",  $data['desa'], $document);
+        $document = str_replace("#kecamatan",  $data['nama'], $document);
+        $document = str_replace("#kab",  $data['kota'], $document);
+        $document = str_replace("#nama",  $data['namaPemilik'], $document);
+        $document = str_replace("#penghuni",  $data['jumlahPenghuni'], $document);
+
+        header("Content-type: application/msword");
+        header("Content-disposition: inline; filename=laporan.doc");
+        header("Content-length: ".strlen($document));
+        echo $document;
+
     }
 }
 ?>
