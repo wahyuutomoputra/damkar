@@ -107,7 +107,7 @@ $nilaiAset =0;
     </div><!-- /.box -->
 
     <!-- Default box -->
-    <div class="box">
+    <div class="box" id="print">
         <div class="box-header with-border">
             <h3 class="box-title">Laporan Penanggulangan Kejadian Kebakaran</h3>
             <div class="box-tools pull-right">
@@ -122,13 +122,11 @@ $nilaiAset =0;
         }else{
         ?>
           <canvas id="grafik" height=100></canvas>
-          <p align="center"><b>Jumlah Total: <?php echo $total; ?></b></p>
-          <h4  class="box-title">Nilai Kerugian:&nbsp; <?php echo "Rp " . number_format($nilaiKerugian,2,',','.'); ?></h4>
-          <h4  class="box-title">Nilai Aset Terselamatkan:&nbsp; <?php echo "Rp " . number_format($nilaiAset,2,',','.'); ?></h4>
+          <p align="center" id="total"><b>Jumlah Total: <?php echo $total; ?></b></p>
+          <h4  class="box-title" id="kerugian">Nilai Kerugian:&nbsp; <?php echo "Rp " . number_format($nilaiKerugian,2,',','.'); ?></h4>
+          <h4  class="box-title" id="terselamatkan">Nilai Aset Terselamatkan:&nbsp; <?php echo "Rp " . number_format($nilaiAset,2,',','.'); ?></h4>
         <?php } ?>
-        <button type="button" id="download-pdf2" >
-  Download Higher Quality PDF
-</button>
+        <button type="button" id="download-pdf2" >Download</button>
         </div><!-- /.box-body -->
         <div class="box-footer">
             Damkar Soreang
@@ -202,22 +200,30 @@ $nilaiAset =0;
 
 //download pdf form hidden canvas
 function downloadPDF2() {
+    
     var canvas = document.getElementById("grafik");
+    var total = document.getElementById("total");
+    var kerugian = document.getElementById("kerugian");
+    var terselamatkan = document.getElementById("terselamatkan");
+    var tTotal = total.innerHTML;
+    var tKerugian = kerugian.innerHTML;
+    var tTerselamatkan = terselamatkan.innerHTML;
     var win = window.open();
-    win.document.write("<br><img src='" + canvas.toDataURL() + "'/>");
+    var windowContent = '<!DOCTYPE html>';
+    windowContent += '<html>'
+    windowContent += '<head></head>';
+    windowContent += '<body>';
+    windowContent += "<p align='center'<b>Laporan Kebakaran</b></p>";
+    windowContent += '<img src="' + canvas.toDataURL("image/png") + '">';
+    windowContent += "<p align='center'"+tTotal+"</b></p>";
+    windowContent += "<h4  class='box-title'>Nilai Kerugian:&nbsp;"+tKerugian+" </h4>";
+    windowContent += "<h4  class='box-title'>Nilai Aset Terselamatkan:&nbsp;"+tTerselamatkan+" </h4>";
+    windowContent += '</body>';
+    windowContent += '</html>';
+    win.document.write(windowContent);
+    win.document.close();
     win.print();
-    win.location.reload();
-  //   var newCanvas = document.querySelector('#grafik');
-
-  // //create image from dummy canvas
-  //   var newCanvasImg = newCanvas.toDataURL("image/jpeg", 1.0);
-  
-  //   //creates PDF from img
-  //   var doc = new jsPDF('landscape');
-  //   doc.setFontSize(20);
-  //   doc.text(15, 15, "Super Cool Chart");
-  //   doc.addImage(newCanvasImg, 'JPEG', 10, 10, 280, 150 );
-  //   doc.save('new-canvas.pdf');
+    Win.close();
  }
 </script>
 
