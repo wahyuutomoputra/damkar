@@ -21,7 +21,7 @@ class BeritaAcara extends CI_Controller {
     {
         $insert = $this->M_berita_acara->insert();
         if ($insert) {
-            $this->tampil_beritaAcara();
+            redirect('Rescue/tampil_beritaAcara');
         }
     }
 
@@ -36,11 +36,10 @@ class BeritaAcara extends CI_Controller {
     public function detail_beritaAcara($id)
     {
         $data['detail'] = $this->M_berita_acara->get_detail($id)->row_array();
+        $data['kec'] = $this->M_berita_acara->get_kecamatan()->result();
         $this->load->view('beritaAcara/detail_beritaAcara',$data);
-
     }
 
-    
     public function get_data_beritaAcara($filter)
     {
         $list = $this->M_berita_acara->get_datatables($filter);

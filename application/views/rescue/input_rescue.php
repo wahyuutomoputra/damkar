@@ -176,23 +176,23 @@ $this->load->view('template/sidebar');
 
                 <label for="">Regu Piket:</label>
                 <div class="form-group" style="padding-left:5em">
-                  <label for="meninggal">Danru I:</label>
+                  <label for="meninggal">Regu I:</label>
                   <input type="text" class="form-control" id="danru1"  name="danru1" >
                 </div>
 
                 <div class="form-group" style="padding-left:5em">
-                  <label for="meninggal">Danru II:</label>
+                  <label for="meninggal">Regu II:</label>
                   <input type="text" class="form-control" id="danru2"  name="danru2" >
                 </div>
 
                 <label for="">Peleton Piket:</label>
                 <div class="form-group" style="padding-left:5em">
-                  <label for="meninggal">Danton I:</label>
+                  <label for="meninggal">Peleton I:</label>
                   <input type="text" class="form-control" id="danton1"  name="danton1" >
                 </div>
 
                 <div class="form-group" style="padding-left:5em">
-                  <label for="meninggal">Danton II:</label>
+                  <label for="meninggal">Peleton II:</label>
                   <input type="text" class="form-control" id="danton2"  name="danton2" >
                 </div>
 

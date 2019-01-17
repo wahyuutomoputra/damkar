@@ -81,9 +81,15 @@ $this->load->view('template/sidebar');
                     <input type="text" value="<?php echo $detail['desa']; ?>" id="desa" name="desa" disabled><br>&nbsp;
 
                     <label  for="">Kecamatan</label><br>&nbsp;
-                    <select name="kecamatan" id="">
-                    <option value="<?php echo $detail['idKecamatan']; ?>"><?php echo $detail['nama']; ?></option>
-                    
+                    <select name="kecamatan" id="kecamatan">
+                    <?php foreach ($kec as $k ) {
+                        if ($detail['idKecamatan']==$k->idKecamatan) {
+                            echo '<option selected="selected" value="' . $k->idKecamatan . '">' . $k->nama . '</option>';
+                        }else{
+                            echo '<option value="' . $k->idKecamatan . '">' . $k->nama . '</option>';
+                        }
+                    }
+                     ?>
                     </select><br>&nbsp;
 
                     <label  for="">Kab\Kota</label><br>&nbsp;
@@ -119,6 +125,11 @@ $this->load->view('template/sidebar');
                 <div class="form-group">
                   <label for="luasArea">Luas Area Yang Terbakar:</label>
                   <input type="text" value="<?php echo $detail['luasArea']; ?>" class="form-control" id="luasArea"  name="luasArea" disabled>
+                </div>
+
+                <div class="form-group">
+                  <label for="penyebabKebakaran">Penyebab Kebakaran:</label>
+                  <input type="text" value="<?php echo $detail['penyebabKebakaran']; ?>" class="form-control" id="penyebabKebakaran"  name="penyebabKebakaran" required>
                 </div>
                 
                 <label for="">Kerugian Harta Benda:</label> <br>

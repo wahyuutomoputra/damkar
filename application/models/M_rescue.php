@@ -235,6 +235,74 @@ class M_rescue extends CI_Model
         return $this->db->count_all_results();
     }
 
+    public function cetak($id)
+    {
+        $data = $this->M_rescue->get_detail($id)->row_array();
+        $hari = array ( 1 => 'Senin',
+            'Selasa',
+            'Rabu',
+            'Kamis',
+            'Jumat',
+            'Sabtu',
+            'Minggu'
+        );
+
+        $tgl = $hari[date('N', strtotime($data['tanggal']))];
+
+        $document = file_get_contents(FCPATH . "bap/Rescue.rtf");
+        $document = str_replace("#informasiDiterima", $data['informasiDiterima'], $document);
+        $document = str_replace("#tibaDilokasi", $data['tibaDilokasi'], $document);
+        $document = str_replace("#selesaiPemadaman",  $data['selesaiPemadaman'], $document);
+        $document = str_replace("#responTime",  $data['responTime'], $document);
+        $document = str_replace("#tanggal",  $this->tanggal($data['tanggal']), $document);
+        $document = str_replace("#hari", $tgl , $document);
+        $document = str_replace("#rt",  $data['rt'], $document);
+        $document = str_replace("#rw",  $data['rw'], $document);
+        $document = str_replace("#kampung",  $data['kampung'], $document);
+        $document = str_replace("#desa",  $data['desa'], $document);
+        $document = str_replace("#kecamatan",  $data['nama'], $document);
+        $document = str_replace("#kab",  $data['kota'], $document);
+        $document = str_replace("#nama",  $data['namaPemilik'], $document);
+        $document = str_replace("#penghuni",  $data['jumlahPenghuni'], $document);
+        $document = str_replace("#jenisEvakuasi",  $data['jenisEvakuasi'], $document);
+        $document = str_replace("#jenisPenyelamatan",  $data['jenisPenyelamatan'], $document);
+        $document = str_replace("#luka",  $data['luka'], $document);
+        $document = str_replace("#meninggal",  $data['meninggal'], $document);
+        $document = str_replace("#jumlahMobil",  $data['jumlahMobil'], $document);
+        $document = str_replace("#nomorPolisi",  $data['nomorPolisi'], $document);
+        $document = str_replace("#jumlahPetugas",  $data['jumlahPetugas'], $document);
+        $document = str_replace("#danru1",  $data['danru1'], $document);
+        $document = str_replace("#danru2",  $data['danru2'], $document);
+        $document = str_replace("#danton1",  $data['danton1'], $document);
+        $document = str_replace("#danton2",  $data['danton2'], $document);
+
+        header("Content-type: application/msword");
+        header("Content-disposition: inline; filename=Rescue.doc");
+        header("Content-length: ".strlen($document));
+        echo $document;
+    }
+
+    function tanggal($tanggal)
+    {
+
+        $bulan = array (
+            1 =>   'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        );
+        $pecahkan = explode('-', $tanggal);
+        return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+    }
+
 } 
 
 ?>

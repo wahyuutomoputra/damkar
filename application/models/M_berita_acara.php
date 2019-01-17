@@ -51,6 +51,7 @@ class M_berita_acara extends CI_Model
             'jenisBangunan' => $this->input->post('jenisBangunan'),
             'areaTerbakar' => $this->input->post('areaTerbakar'),
             'luasArea' => $this->input->post('luasArea'),
+            'penyebabKebakaran' => $this->input->post('penyebabKebakaran'),
             'asetKeseluruhan' => str_replace(".", "",$this->input->post('asetKeseluruhan')),
             'nilaiKerugian' => str_replace(".", "",$this->input->post('nilaiKerugian')),
             'asetTerselamatkan' => str_replace(".", "",$this->input->post('asetTerselamatkan')),
@@ -107,6 +108,7 @@ class M_berita_acara extends CI_Model
             'jenisBangunan' => $this->input->post('jenisBangunan'),
             'areaTerbakar' => $this->input->post('areaTerbakar'),
             'luasArea' => $this->input->post('luasArea'),
+            'penyebabKebakaran' => $this->input->post('penyebabKebakaran'),
             'asetKeseluruhan' => str_replace(".", "",$this->input->post('asetKeseluruhan')),
             'nilaiKerugian' => str_replace(".", "",$this->input->post('nilaiKerugian')),
             'asetTerselamatkan' => str_replace(".", "",$this->input->post('asetTerselamatkan')),
@@ -262,7 +264,7 @@ class M_berita_acara extends CI_Model
         $document = str_replace("#tibaDilokasi", $data['tibaDilokasi'], $document);
         $document = str_replace("#selesaiPemadaman",  $data['selesaiPemadaman'], $document);
         $document = str_replace("#responTime",  $data['responTime'], $document);
-        $document = str_replace("#tanggal",  $data['tanggal'], $document);
+        $document = str_replace("#tanggal",  $this->tanggal($data['tanggal']), $document);
         $document = str_replace("#hari", $tgl , $document);
         $document = str_replace("#rt",  $data['rt'], $document);
         $document = str_replace("#rw",  $data['rw'], $document);
@@ -272,12 +274,54 @@ class M_berita_acara extends CI_Model
         $document = str_replace("#kab",  $data['kota'], $document);
         $document = str_replace("#nama",  $data['namaPemilik'], $document);
         $document = str_replace("#penghuni",  $data['jumlahPenghuni'], $document);
+        $document = str_replace("#jenisBangunan",  $data['jenisBangunan'], $document);
+        $document = str_replace("#areaTerbakar",  $data['areaTerbakar'], $document);
+        $document = str_replace("#luasArea",  $data['luasArea'], $document);
+        $document = str_replace("#penyebabKebakaran",  $data['penyebabKebakaran'], $document);
+        $document = str_replace("#asetKeseluruhan", $this->rupiah($data['asetKeseluruhan']), $document);
+        $document = str_replace("#nilaiKerugian", $this->rupiah($data['nilaiKerugian']), $document);
+        $document = str_replace("#asetTerselamatkan", $this->rupiah($data['asetTerselamatkan']), $document);
+        $document = str_replace("#luka",  $data['luka'], $document);
+        $document = str_replace("#meninggal",  $data['meninggal'], $document);
+        $document = str_replace("#jumlahMobil",  $data['jumlahMobil'], $document);
+        $document = str_replace("#nomorPolisi",  $data['nomorPolisi'], $document);
+        $document = str_replace("#jumlahPetugas",  $data['jumlahPetugas'], $document);
+        $document = str_replace("#danru1",  $data['danru1'], $document);
+        $document = str_replace("#danru2",  $data['danru2'], $document);
+        $document = str_replace("#danton1",  $data['danton1'], $document);
+        $document = str_replace("#danton2",  $data['danton2'], $document);
 
         header("Content-type: application/msword");
         header("Content-disposition: inline; filename=laporan.doc");
         header("Content-length: ".strlen($document));
         echo $document;
+    }
 
+    function rupiah($angka)
+    {
+        $hasil_rupiah = "Rp " . number_format($angka,2,',','.');
+        return $hasil_rupiah;
+    }
+
+    function tanggal($tanggal)
+    {
+
+        $bulan = array (
+            1 =>   'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        );
+        $pecahkan = explode('-', $tanggal);
+        return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
     }
 }
 ?>

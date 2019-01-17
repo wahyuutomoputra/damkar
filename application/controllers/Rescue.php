@@ -20,7 +20,7 @@ class Rescue extends CI_Controller {
 	{
 		$insert = $this->M_rescue->insert();
         if ($insert) {
-            $this->tampil_rescue();
+            redirect('Rescue/tampil_rescue');
         }
 	}
 
@@ -83,5 +83,10 @@ class Rescue extends CI_Controller {
         if ($update) {
             redirect('Rescue/detail_rescue/'.$id);
         }
+    }
+
+    public function cetak($id)
+    {
+        $this->M_rescue->cetak($id);
     }
 }

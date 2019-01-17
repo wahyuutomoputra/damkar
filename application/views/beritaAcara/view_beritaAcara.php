@@ -140,6 +140,11 @@ $this->load->view('template/sidebar');
                   <label for="luasArea">Luas Area Yang Terbakar:</label>
                   <input type="text" class="form-control" id="luasArea"  name="luasArea" required>
                 </div>
+
+                <div class="form-group">
+                  <label for="penyebabKebakaran">Penyebab Kebakaran:</label>
+                  <input type="text" class="form-control" id="penyebabKebakaran"  name="penyebabKebakaran" required>
+                </div>
                 
                 <label for="">Kerugian Harta Benda:</label> <br>
                 <label style="padding-left:5em" for="asetKeseluruhan">Nilai Aset Keseluruhan:</label>

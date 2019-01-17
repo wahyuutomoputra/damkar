@@ -8,7 +8,6 @@ class ComposerStaticInite94c0f59b84fcea4a64677e989483790
 {
     public static $files = array (
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
-        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '3109cb1a231dcd04bee1f9f620d46975' => __DIR__ . '/..' . '/paragonie/sodium_compat/autoload.php',
     );
 
@@ -17,14 +16,6 @@ class ComposerStaticInite94c0f59b84fcea4a64677e989483790
         array (
             'Pusher\\' => 7,
             'Psr\\Log\\' => 8,
-        ),
-        'M' => 
-        array (
-            'Mpdf\\' => 5,
-        ),
-        'D' => 
-        array (
-            'DeepCopy\\' => 9,
         ),
     );
 
@@ -36,14 +27,6 @@ class ComposerStaticInite94c0f59b84fcea4a64677e989483790
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
-        ),
-        'Mpdf\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/mpdf/mpdf/src',
-        ),
-        'DeepCopy\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
     );
 
@@ -57,23 +40,12 @@ class ComposerStaticInite94c0f59b84fcea4a64677e989483790
         ),
     );
 
-    public static $classMap = array (
-        'FPDF_TPL' => __DIR__ . '/..' . '/setasign/fpdi/fpdf_tpl.php',
-        'FPDI' => __DIR__ . '/..' . '/setasign/fpdi/fpdi.php',
-        'FilterASCII85' => __DIR__ . '/..' . '/setasign/fpdi/filters/FilterASCII85.php',
-        'FilterASCIIHexDecode' => __DIR__ . '/..' . '/setasign/fpdi/filters/FilterASCIIHexDecode.php',
-        'FilterLZW' => __DIR__ . '/..' . '/setasign/fpdi/filters/FilterLZW.php',
-        'fpdi_pdf_parser' => __DIR__ . '/..' . '/setasign/fpdi/fpdi_pdf_parser.php',
-        'pdf_context' => __DIR__ . '/..' . '/setasign/fpdi/pdf_context.php',
-    );
-
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInite94c0f59b84fcea4a64677e989483790::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInite94c0f59b84fcea4a64677e989483790::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInite94c0f59b84fcea4a64677e989483790::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInite94c0f59b84fcea4a64677e989483790::$classMap;
 
         }, null, ClassLoader::class);
     }

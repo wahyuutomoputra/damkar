@@ -228,7 +228,7 @@ $this->load->view('template/sidebar');
              <button type="submit" id="Cancel" class="btn btn-default" onclick="disable()">Cancel</button>
         </div><!-- /.box-body -->
         <div class="box-footer">
-            <button id="cetak" class="btn btn-default pull-right" ><a href="<?php echo site_url('BeritaAcara/cetak').'/'.$detail['id'];?>" target="_blank">Cetak</a></button> <br> <br>
+            <button id="cetak" class="btn btn-default pull-right" ><a href="<?php echo site_url('Rescue/cetak').'/'.$detail['id'];?>" target="_blank">Cetak</a></button> <br> <br>
         </div><!-- /.box-footer-->      
     </div><!-- /.box -->
 </section><!-- /.content -->
