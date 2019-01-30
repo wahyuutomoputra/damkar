@@ -21,7 +21,7 @@ class BeritaAcara extends CI_Controller {
     {
         $insert = $this->M_berita_acara->insert();
         if ($insert) {
-            redirect('Rescue/tampil_beritaAcara');
+            redirect('BeritaAcara/tampil_beritaAcara');
         }
     }
 

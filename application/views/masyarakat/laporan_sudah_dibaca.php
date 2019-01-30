@@ -2,6 +2,7 @@
 $this->load->view('template/head');
 ?>
 <!--tambahkan custom css disini-->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
 <?php
 $this->load->view('template/topbar');
 $this->load->view('template/sidebar');
@@ -9,8 +10,8 @@ $this->load->view('template/sidebar');
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Blank page
-        <small>it all starts here</small>
+        Laporan Kebakaran
+        <small>Sudah Dibaca</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -32,20 +33,33 @@ $this->load->view('template/sidebar');
             </div>
         </div>
         <div class="box-body">
-            <table class="table table-striped" id="mydata">
-            <thead>
-                <tr>
-                    <th>Nama</th>
-                    <th>Nomor</th>
-                    <th>Pesan</th>
-                    <th>Lokasi</th>
-                    <th style="text-align: right;">Detail</th>
-                </tr>
-            </thead>
-            <tbody id="show_data">
-                 
-            </tbody>
-        </table>
+            <table id="table" class="table table-striped table-bordered table-hover " cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>NO</th>
+                        <th>Nama</th>
+                        <th>Nomor</th>
+                        <th>Pesan</th>
+                        <th>Lokasi</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <th>NO</th>
+                        <th>Nama</th>
+                        <th>Nomor</th>
+                        <th>Pesan</th>
+                        <th>Lokasi</th>
+                        <th>Aksi</th>
+                    </tr>
+                </tfoot>
+
+            </table>
         </div><!-- /.box-body -->
         <div class="box-footer">
             Footer
@@ -58,34 +72,29 @@ $this->load->view('template/sidebar');
 $this->load->view('template/js');
 ?>
 <!--tambahkan custom js disini-->
+<script src="<?php echo base_url('assets/datatables.net/js/jquery.dataTables.min.js') ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/datatables.net-bs/js/dataTables.bootstrap.min.js') ?>" type="text/javascript"></script>
 <script type="text/javascript">
-    $(document).ready(function(){
-        tampil_data();
-        function tampil_data(){
-            $.ajax({
-                type  : 'ajax',
-                url   : '<?php echo base_url()?>Masyarakat/view_data_sudah',
-                async : false,
-                dataType : 'json',
-                success : function(data){
-                    var html = '';
-                    var i;
-                    for(i=0; i<data.length; i++){
-                        html += '<tr>'+
-                                '<td>'+data[i].nama+'</td>'+
-                                '<td>'+data[i].nomor+'</td>'+
-                                '<td>'+data[i].pesan+'</td>'+
-                                '<td>'+data[i].lokasi+'</td>'+
-                                '<td style="text-align:right;">'+
-                                '<a href="<?php echo base_url('Masyarakat/detail_laporan')?>/'+data[i].id+'" class="btn btn-danger btn-xs item_hapus" >Detail</a>'+
-                                '</td>'+
-                                '</tr>';
-                    }
-                    $('#show_data').html(html);
-                }
+    var table;
+    $(document).ready(function() {
  
-            });
-        }
+        //datatables
+        table = $('#table').DataTable({ 
+ 
+            "processing": true, 
+            "serverSide": true, 
+            "order": [], 
+            "ajax": {
+                "url": "<?php echo site_url('Masyarakat/view_data/sudah')?>",
+                "type": "POST"
+            },
+            "columnDefs": [
+            { 
+                "targets": [ 0 ], 
+                "orderable": false, 
+            },
+            ],
+        });
     });
 </script>
 <?php

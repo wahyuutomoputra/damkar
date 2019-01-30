@@ -5,6 +5,7 @@ $this->load->view('template/head');
 <style>
    hr { background-color: rgba(0, 0, 255, 0.3); height: 2px; border: 0; }
 </style>
+
 <?php
 $this->load->view('template/topbar');
 $this->load->view('template/sidebar');
@@ -183,23 +184,23 @@ $this->load->view('template/sidebar');
                 <label for="">Regu Piket:</label>
                 <div class="form-group" style="padding-left:5em">
                   <label for="meninggal">Danru I:</label>
-                  <input type="text" value="<?php echo $detail['danru1']; ?>" class="form-control" id="danru1"  name="danru1" >
+                  <input type="text" value="<?php echo $detail['danru1']; ?>" class="form-control" id="danru1"  name="danru1" disabled>
                 </div>
 
                 <div class="form-group" style="padding-left:5em">
                   <label for="meninggal">Danru II:</label>
-                  <input type="text" value="<?php echo $detail['danru2']; ?>" class="form-control" id="danru2"  name="danru2" >
+                  <input type="text" value="<?php echo $detail['danru2']; ?>" class="form-control" id="danru2"  name="danru2" disabled>
                 </div>
 
                 <label for="">Peleton Piket:</label>
                 <div class="form-group" style="padding-left:5em">
                   <label for="meninggal">Danton I:</label>
-                  <input type="text" value="<?php echo $detail['danton1']; ?>" class="form-control" id="danton1"  name="danton1" >
+                  <input type="text" value="<?php echo $detail['danton1']; ?>" class="form-control" id="danton1"  name="danton1" disabled>
                 </div>
 
                 <div class="form-group" style="padding-left:5em">
                   <label for="meninggal">Danton II:</label>
-                  <input type="text" value="<?php echo $detail['danton2']; ?>" class="form-control" id="danton2"  name="danton2" >
+                  <input type="text" value="<?php echo $detail['danton2']; ?>" class="form-control" id="danton2"  name="danton2" disabled>
                 </div>
 
                 <div class="form-group">
@@ -238,6 +239,7 @@ $this->load->view('template/sidebar');
 $this->load->view('template/js');
 ?>
 <script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
+
 <script>
 
     $(document).ready(function(){

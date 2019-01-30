@@ -2,64 +2,101 @@
 
 class M_pegawai extends CI_Model
 {
-    function input()
+
+    var $table = 'pegawai';
+    var $column_order = array('nip','nama','email','status','alamat',null); //set column field database for datatable orderable
+    var $column_search = array('nip','nama','status'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+    var $order = array('nama' => 'asc'); // default order 
+
+    private function _get_datatables_query()
     {
-        //$status = 
-        $data = array(
-            'nip'=> $this->input->post('nip'),
-            'nama' => $this->input->post('nama'),
-            'email' => $this->input->post('email'),
-            'password' => password_hash($this->input->post('nip'),PASSWORD_DEFAULT),
-            'status' => $this->input->post('status'),
-            'alamat' => $this->input->post('alamat')
-        );
-        return $this->db->insert('Pegawai', $data);
         
-    }
+        $this->db->from($this->table);
 
-    function daftar_pegawai()
-    {
-        $hasil=$this->db->get("Pegawai");
-        return $hasil->result();
-    }
+        $i = 0;
+    
+        foreach ($this->column_search as $item) // loop column 
+        {
+            if($_POST['search']['value']) // if datatable send POST for search
+            {
+                
+                if($i===0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $_POST['search']['value']);
+                }
+                else
+                {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
 
-    function hapus_pegawai()
-    {
-        $id = $this->input->post('id_pegawai');
-        $hasil=$this->db->query("DELETE FROM Pegawai WHERE nip='$id'");
-        return $hasil;
-    }
-
-    function get_pegawai_by_id($id)
-    {
-        $hsl=$this->db->query("SELECT * FROM Pegawai WHERE nip='$id'");
-        if($hsl->num_rows()>0){
-            foreach ($hsl->result() as $data) {
-                $hasil=array(
-                    'pegawai_nip' => $data->nip,
-                    'pegawai_nama' => $data->nama,
-                    'pegawai_email' => $data->email,
-                    'pegawai_status' => $data->status,
-                    'pegawai_alamat' => $data->alamat,
-                    );
+                if(count($this->column_search) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
             }
+            $i++;
         }
-        return $hasil;
+        
+        if(isset($_POST['order'])) // here order processing
+        {
+            $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } 
+        else if(isset($this->order))
+        {
+            $order = $this->order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
     }
 
-    function update_pegawai()
+    function get_datatables()
     {
-        $data = array(
-            'nip'=> $this->input->post('nip'),
-            'nama' => $this->input->post('nama'),
-            'email' => $this->input->post('email'),
-            'status' => $this->input->post('status'),
-            'alamat' => $this->input->post('alamat')
-        );
-        $this->db->where('nip', $this->input->post('nip'));
-        return $this->db->update('pegawai', $data);
+        $this->_get_datatables_query();
+        if($_POST['length'] != -1)
+        $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
     }
 
+    function count_filtered()
+    {
+        $this->_get_datatables_query();
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_all()
+    {
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
+
+    public function get_by_id($id)
+    {
+        $this->db->from($this->table);
+        $this->db->where('nip',$id);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
+    public function save($data)
+    {
+        $this->db->insert($this->table, $data);
+        return $this->db->insert_id();
+    }
+
+    public function update($where, $data)
+    {
+        $this->db->update($this->table, $data, $where);
+        return $this->db->affected_rows();
+    }
+
+    public function delete_by_id($id)
+    {
+        $this->db->where('nip', $id);
+        $this->db->delete($this->table);
+    }
+
+    //profile
     function get_profile()
     {
         $nip = $_SESSION['nip'];

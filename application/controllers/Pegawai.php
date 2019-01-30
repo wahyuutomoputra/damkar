@@ -13,40 +13,11 @@ class Pegawai extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('pegawai/Menu');
+		$this->load->view('pegawai/menuPegawai');
     }
     
-    public function input()
-    {
-        $data=$this->M_pegawai->input();
-        echo json_encode($data);
-    }
-
-    public function get_data()
-    {
-        $data=$this->M_pegawai->daftar_pegawai();
-        echo json_encode($data);
-    }
-
-    public function hapus()
-    {
-        $data=$this->M_pegawai->hapus_pegawai();
-        echo json_encode($data);
-    }
-
-    public function get_pegawai()
-    {
-        $id=$this->input->get('id');
-        $data=$this->M_pegawai->get_pegawai_by_id($id);
-        echo json_encode($data);
-    }
-
-    public function update_pegawai()
-    {
-         $data=$this->M_pegawai->update_pegawai();
-         echo json_encode($data);
-    }
-
+    
+    //profile
     public function update_profile()
     {
         $data = $this->M_pegawai->update_profile();
@@ -63,5 +34,126 @@ class Pegawai extends CI_Controller {
     {
         $data = $this->M_pegawai->ubah_password();
         echo json_encode($data);
+    }
+
+    public function ajax_list()
+    {
+        $list = $this->M_pegawai->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $person) {
+            $no++;
+            $row = array();
+            $row[] = $person->nip;
+            $row[] = $person->nama;
+            $row[] = $person->email;
+            $row[] = $person->status;
+            $row[] = $person->alamat;
+
+            //add html for action
+            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_person('."'".$person->nip."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+                  <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_person('."'".$person->nip."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+        
+            $data[] = $row;
+        }
+
+        $output = array(
+                        "draw" => $_POST['draw'],
+                        "recordsTotal" => $this->M_pegawai->count_all(),
+                        "recordsFiltered" => $this->M_pegawai->count_filtered(),
+                        "data" => $data,
+                );
+        //output to json format
+        echo json_encode($output);
+    }
+
+    public function ajax_add()
+    {
+        $this->_validate();
+        $data = array(
+                'nip' => $this->input->post('nip'),
+                'nama' => $this->input->post('nama'),
+                'email' => $this->input->post('email'),
+                'password' => password_hash($this->input->post('nip'),PASSWORD_DEFAULT),
+                'status' => $this->input->post('status'),
+                'alamat' => $this->input->post('alamat'),
+            );
+        $insert = $this->M_pegawai->save($data);
+        echo json_encode(array("status" => TRUE));
+    }
+
+    public function ajax_update()
+    {
+        $this->_validate();
+        $data = array(
+                'nip' => $this->input->post('nip'),
+                'nama' => $this->input->post('nama'),
+                'email' => $this->input->post('email'),
+                'status' => $this->input->post('status'),
+                'alamat' => $this->input->post('alamat'),
+            );
+        $this->M_pegawai->update(array('nip' => $this->input->post('nip')), $data);
+        echo json_encode(array("status" => TRUE));
+    }
+
+    private function _validate()
+    {
+        $data = array();
+        $data['error_string'] = array();
+        $data['inputerror'] = array();
+        $data['status'] = TRUE;
+
+        if($this->input->post('nip') == '')
+        {
+            $data['inputerror'][] = 'nip';
+            $data['error_string'][] = 'NIP harus diisi';
+            $data['status'] = FALSE;
+        }
+
+        if($this->input->post('nama') == '')
+        {
+            $data['inputerror'][] = 'nama';
+            $data['error_string'][] = 'Nama harus diisi';
+            $data['status'] = FALSE;
+        }
+
+        if($this->input->post('email') == '')
+        {
+            $data['inputerror'][] = 'email';
+            $data['error_string'][] = 'Email harus diisi';
+            $data['status'] = FALSE;
+        }
+
+        if($this->input->post('status') == '')
+        {
+            $data['inputerror'][] = 'status';
+            $data['error_string'][] = 'Status harus dipilih';
+            $data['status'] = FALSE;
+        }
+
+        if($this->input->post('alamat') == '')
+        {
+            $data['inputerror'][] = 'alamat';
+            $data['error_string'][] = 'Alamat harus diisi';
+            $data['status'] = FALSE;
+        }
+
+        if($data['status'] === FALSE)
+        {
+            echo json_encode($data);
+            exit();
+        }
+    }
+
+    public function ajax_edit($id)
+    {
+        $data = $this->M_pegawai->get_by_id($id);
+        echo json_encode($data);
+    }
+
+    public function ajax_delete($id)
+    {
+        $this->M_pegawai->delete_by_id($id);
+        echo json_encode(array("status" => TRUE));
     }
 }
