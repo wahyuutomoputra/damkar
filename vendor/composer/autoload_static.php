@@ -40,12 +40,18 @@ class ComposerStaticInite94c0f59b84fcea4a64677e989483790
         ),
     );
 
+    public static $classMap = array (
+        'Format' => __DIR__ . '/..' . '/chriskacerguis/codeigniter-restserver/application/libraries/Format.php',
+        'Restserver\\Libraries\\REST_Controller' => __DIR__ . '/..' . '/chriskacerguis/codeigniter-restserver/application/libraries/REST_Controller.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInite94c0f59b84fcea4a64677e989483790::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInite94c0f59b84fcea4a64677e989483790::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInite94c0f59b84fcea4a64677e989483790::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInite94c0f59b84fcea4a64677e989483790::$classMap;
 
         }, null, ClassLoader::class);
     }

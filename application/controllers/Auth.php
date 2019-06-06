@@ -22,11 +22,12 @@ class Auth extends CI_Controller {
 		$nip = $this->input->post('nip');
 		$pass = $this->input->post('password');
 		$hasil = $this->M_auth->login($nip);
-		$data = $hasil->row_array();
-		$password = $data['password'];
+		
 
 		if($hasil->num_rows() > 0)
 		{
+			$data = $hasil->row_array();
+			$password = $data['password'];
 			
 			if (password_verify($pass,$password))
 			{

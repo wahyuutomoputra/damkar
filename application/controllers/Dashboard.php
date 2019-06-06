@@ -10,9 +10,9 @@ class Dashboard extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->model('M_dashboard');
         session_start();
-		// if (!isset($_SESSION['nip'])) {
-        //     die('login dulu bos');
-        // }
+		if (!isset($_SESSION['nip'])) {
+            die('login dulu bos');
+        }
 	}	
 
 	public function index()

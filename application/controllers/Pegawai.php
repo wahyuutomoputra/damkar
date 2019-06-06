@@ -77,6 +77,7 @@ class Pegawai extends CI_Controller {
                 'password' => password_hash($this->input->post('nip'),PASSWORD_DEFAULT),
                 'status' => $this->input->post('status'),
                 'alamat' => $this->input->post('alamat'),
+                'nomor' => $this->input->post('nomor'),
             );
         $insert = $this->M_pegawai->save($data);
         echo json_encode(array("status" => TRUE));
@@ -91,6 +92,7 @@ class Pegawai extends CI_Controller {
                 'email' => $this->input->post('email'),
                 'status' => $this->input->post('status'),
                 'alamat' => $this->input->post('alamat'),
+                'nomor' => $this->input->post('nomor'),
             );
         $this->M_pegawai->update(array('nip' => $this->input->post('nip')), $data);
         echo json_encode(array("status" => TRUE));
@@ -135,6 +137,13 @@ class Pegawai extends CI_Controller {
         {
             $data['inputerror'][] = 'alamat';
             $data['error_string'][] = 'Alamat harus diisi';
+            $data['status'] = FALSE;
+        }
+
+        if($this->input->post('nomor') == '')
+        {
+            $data['inputerror'][] = 'nomor';
+            $data['error_string'][] = 'Nomor telepon harus diisi';
             $data['status'] = FALSE;
         }
 

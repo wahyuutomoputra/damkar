@@ -109,6 +109,13 @@ $this->load->view('template/js');
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="control-label col-md-3">Nomor</label>
+                            <div class="col-md-9">
+                                <input name="nomor" placeholder="Last Name" class="form-control" type="text">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label col-md-3">Status</label>
                             <div class="col-md-9">
                                 <select name="status" class="form-control">
