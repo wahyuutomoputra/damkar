@@ -249,8 +249,9 @@ $this->load->view('template/js');
 ?>
 <script src="<?php echo base_url('assets/datetimepicker/timepicker.min.js') ?>" type="text/javascript"></script>
 <script src="<?php echo base_url('assets/datetimepicker/moment-with-locales.js') ?>" type="text/javascript"></script>
-<script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
-<script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+<script src="<?php echo base_url('assets/Mask/jquery.mask.min.js') ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/datetimepicker/bootstrap-datetimepicker.js') ?>" type="text/javascript"></script>
+
 <script>
 
     $(document).ready(function(){

@@ -66,6 +66,7 @@ class M_berita_acara extends CI_Model
             'danton2' => $this->input->post('danton2'),
             'gambar1' => $namaGambar[1],
             'gambar2' => $namaGambar[2],
+            'status_ba' => 'kebakaran',
         );
         $this->db->where('id', $id);
         return $this->db->update('berita_acara', $data);

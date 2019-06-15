@@ -55,6 +55,7 @@ class M_rescue extends CI_Model
             'danton2' => $this->input->post('danton2'),
             'gambar1' => $namaGambar[1],
             'gambar2' => $namaGambar[2],
+            'status_ba' => 'penyelamatan',
         );
         return $this->db->insert('rescue', $data);
     }

@@ -24,6 +24,7 @@ class Masyarakat extends CI_Controller {
         foreach ($list as $field) {
             $no++;
             $row = array();
+            $row[] = $field->id;
             $row[] = $no;
             $row[] = $field->nama;
             $row[] = $field->nomor;

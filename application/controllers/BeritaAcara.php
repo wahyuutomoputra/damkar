@@ -58,13 +58,54 @@ class BeritaAcara extends CI_Controller {
         foreach ($list as $field) {
             $no++;
             $row = array();
+            $row[] = $field->id;
             $row[] = $no;
             $row[] = $field->tanggal;
             $row[] = $hari[date('N', strtotime($field->tanggal))];
             $row[] = $field->namaPemilik;
             //$row[] = $field->desa;
             
-            $row[] =  "<a href=".base_url('BeritaAcara/detail_beritaAcara/'.$field->id).">Detail</a>";
+           
+ 
+            $data[] = $row;
+        }
+ 
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_berita_acara->count_all(),
+            "recordsFiltered" => $this->M_berita_acara->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    
+    }
+
+    public function get_forLaporan($filter)
+    {
+        $list = $this->M_berita_acara->get_datatables($filter);
+        $data = array();
+        $no = $_POST['start'];
+        $hari = array ( 1 => 'Senin',
+            'Selasa',
+            'Rabu',
+            'Kamis',
+            'Jumat',
+            'Sabtu',
+            'Minggu'
+        );
+
+
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->tanggal;
+            $row[] = $hari[date('N', strtotime($field->tanggal))];
+            $row[] = $field->namaPemilik;
+            //$row[] = $field->desa;
+            
+            $row[] =  $field->id;
  
             $data[] = $row;
         }
