@@ -10,6 +10,55 @@ class React extends CI_Controller {
 		header("Access-Control-Allow-Methods: PUT, GET, POST");
 		$this->load->helper(array('url','form','html'));
 		$this->load->model('M_react');
+        $this->load->library('form_validation');
+
+    }
+
+    // public function tes()
+    // {
+    //     $this->form_validation->set_rules('email', 'Email', 'required|is_unique[pegawai.email]');
+    //      if ($this->form_validation->run() == FALSE)
+    //             {
+    //                     echo "ada";
+    //             }
+    //             else
+    //             {
+    //                     echo "sukses";
+    //             }
+    // }
+
+    public function create_account()
+    {
+        $email = $this->input->post('email');
+        $password = $this->input->post('password');
+        $nama = $this->input->post('password');
+        $alamat = $this->input->post('alamat');
+        $nomor = $this->input->post('password');
+
+        $response['status'] = null;
+
+        $data = array("email" => $email,
+                      "password" => $password,
+                      "nama" => $nama,
+                      "alamat" => $alamat,
+                      "nomor" => $nomor);
+
+        $this->form_validation->set_rules('email', 'Email', 'required|is_unique[pegawai.email]');
+        if ($this->form_validation->run() == FALSE) {
+            $response['pesan'] = "Email telah digunakan";
+            $response['status'] = false;
+        }else{
+            if ($this->M_react->create_user($data)) {
+                $response['pesan'] = "Akun Berhasil Dibuat";
+                $response['status'] = true;
+            }else{
+                $response['pesan'] = "Akun Gagal Dibuat";
+                $response['status'] = false;
+            }
+
+        }
+
+        echo json_encode($response,TRUE);
     }
 
     public function cek_login()
@@ -29,8 +78,46 @@ class React extends CI_Controller {
         echo json_encode($response,TRUE);
     }
 
+    public function getAddress($lat,$long)
+    {
+        $geocode = "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&sensor=false&key=AIzaSyBoxYCfBO539SeKX4ETllWpoGrQS4XwIKM";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $geocode);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $output = json_decode($response);
+        $dataarray = get_object_vars($output);
+
+        if ($dataarray['status'] != 'ZERO_RESULTS' && $dataarray['status'] != 'INVALID_REQUEST') {
+            if (isset($dataarray['results'][0]->formatted_address)) {
+
+                $address = $dataarray['results'][0]->formatted_address;
+
+            } else {
+                $address = 'Not Found';
+
+            }
+        } else {
+            $address = 'Not Found';
+        }
+
+        return $address;
+    }
+
     public function laporan()
     {
+        $date = date('Y-m-d');
+        $id = $this->input->post('id');
+        $latitude = $this->input->post('latitude');
+        $longitude = $this->input->post('longitude');
+        $kategori = $this->input->post('kategori');
+        $pesan = $this->input->post('pesan');
+        $alamat = $this->getAddress($latitude,$longitude);
+
         $this->load->library('upload');
         $config['upload_path']          = './uploads/laporan';
         $config['allowed_types']        = 'gif|jpg|png';
@@ -39,18 +126,15 @@ class React extends CI_Controller {
         $config['max_height']           = 5000;
         $this->upload->initialize($config);
 
-        $date = date('Y-m-d');
-        $id = $this->input->post('id');
-        $latitude = $this->input->post('latitude');
-        $longitude = $this->input->post('longitude');
-        $kategori = $this->input->post('kategori');
-        $pesan = $this->input->post('pesan');
+       
 
         $data = array('id_masyarakat' => $id,
+                      'id_ba' => '0',
                       'latitude' => $latitude,
                       'longitude' => $longitude,
                       'kategori' => $kategori,
                       'status' => 'belum',
+                      'lokasi' => $alamat,
                       'foto' => $_FILES['fileToUpload']['name'],
                       'pesan' => $pesan,
                       'tanggal' => $date);

@@ -37,8 +37,8 @@ $this->load->view('template/sidebar');
                 <thead>
                     <tr>
                         <th>NO</th>
-                        <th>Nama</th>
-                        <th>Nomor</th>
+                        <th>Tanggal</th>
+                        <th>Kategori</th>
                         <th>Pesan</th>
                         <th>Lokasi</th>
                         <th>Aksi</th>
@@ -51,8 +51,8 @@ $this->load->view('template/sidebar');
                 <tfoot>
                     <tr>
                         <th>NO</th>
-                        <th>Nama</th>
-                        <th>Nomor</th>
+                        <th>Tanggal</th>
+                        <th>Kategori</th>
                         <th>Pesan</th>
                         <th>Lokasi</th>
                         <th>Aksi</th>

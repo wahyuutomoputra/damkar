@@ -22,6 +22,11 @@ class M_react extends CI_Model
 		return $this->db->get_where('laporan_kejadian', array('id_masyarakat'=>$id));
 	}
 
+	function create_user($data)
+	{
+		return $this->db->insert('masyarakat', $data);
+	}
+
 	function detailLaporan($id)
 	{
 		return $this->db->get_where('laporan_kejadian', array('id'=>$id));

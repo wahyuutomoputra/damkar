@@ -2,7 +2,7 @@
 
 class M_masyarakat extends CI_Model
 {
-    var $table = 'laporan';
+    var $table = 'laporan_kejadian';
     var $column_order = array(null,'nama','nomor','pesan','lokasi');
     var $column_search = array('nama','nomor','pesan','lokasi');
     var $order = array('id' => 'asc');
@@ -17,20 +17,20 @@ class M_masyarakat extends CI_Model
     function updateBa($data,$where)
     {
         $this->db->where($where);
-        return $this->db->update('laporan', $data);
+        return $this->db->update('laporan_kejadian', $data);
     }
 
     function update_laporan($id)
     {
     	$this->db->set('status', 'sudah');
 		$this->db->where('id', $id);
-		$this->db->update('laporan');
+		$this->db->update('laporan_kejadian');
     }
 
     function get_detail($id)
     {
     	$this->db->where('id',$id);
-    	return $this->db->get('laporan');
+    	return $this->db->get('laporan_kejadian');
     }
 
     function input()
@@ -44,7 +44,7 @@ class M_masyarakat extends CI_Model
             'longitude'=>'107.630529',
             'status'=> 'belum'
         );
-        return $this->db->insert('laporan', $data);
+        return $this->db->insert('laporan_kejadian', $data);
     }
 
     private function get_datatables_query()

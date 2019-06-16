@@ -26,8 +26,8 @@ class Masyarakat extends CI_Controller {
 	             $no++;
 	             $row = array();
 	             $row[] = $no;
-	             $row[] = $field->nama;
-	             $row[] = $field->nomor;
+	             $row[] = $field->tanggal;
+	             $row[] = $field->kategori;
 	             $row[] = $field->pesan;
 	             $row[] = $field->lokasi;
 	            
@@ -41,8 +41,8 @@ class Masyarakat extends CI_Controller {
 	            $row = array();
 	            $row[] = $field->id;
 	            $row[] = $no;
-	            $row[] = $field->nama;
-	            $row[] = $field->nomor;
+	            $row[] = $field->tanggal;
+	            $row[] = $field->kategori;
 	            $row[] = $field->pesan;
 	            $row[] = $field->lokasi;
 	            
