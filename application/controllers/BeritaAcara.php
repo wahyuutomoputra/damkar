@@ -58,12 +58,11 @@ class BeritaAcara extends CI_Controller {
         foreach ($list as $field) {
             $no++;
             $row = array();
-            $row[] = $field->id;
             $row[] = $no;
             $row[] = $field->tanggal;
             $row[] = $hari[date('N', strtotime($field->tanggal))];
             $row[] = $field->namaPemilik;
-            //$row[] = $field->desa;
+            $row[] =  "<a href=".base_url('BeritaAcara/detail_beritaAcara/'.$field->id).">Detail</a>";
             
            
  

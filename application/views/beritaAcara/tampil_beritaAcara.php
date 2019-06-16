@@ -67,7 +67,7 @@ $this->load->view('template/sidebar');
                         <th>NO</th>
                         <th>Tanggal</th>
                         <th>Hari</th>
-                        <th>Tanggal</th>
+                        <th>Nama Pemilik</th>
                         <th>Detail</th>
                     </tr>
                 </thead>
@@ -80,7 +80,7 @@ $this->load->view('template/sidebar');
                         <th>NO</th>
                         <th>Tanggal</th>
                         <th>Hari</th>
-                        <th>Tanggal</th>
+                        <th>Nama Pemilik</th>
                         <th>Detail</th>
                     </tr>
                 </tfoot>

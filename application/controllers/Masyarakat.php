@@ -21,20 +21,37 @@ class Masyarakat extends CI_Controller {
 		$list = $this->M_masyarakat->get_datatables($kode);
         $data = array();
         $no = $_POST['start'];
-        foreach ($list as $field) {
-            $no++;
-            $row = array();
-            $row[] = $field->id;
-            $row[] = $no;
-            $row[] = $field->nama;
-            $row[] = $field->nomor;
-            $row[] = $field->pesan;
-            $row[] = $field->lokasi;
-            
-            $row[] =  "<a href=".base_url('Masyarakat/detail_laporan/'.$field->id).">Detail</a>";
- 
-            $data[] = $row;
-        }
+        if ($kode=="belum") {
+        	 foreach ($list as $field) {
+	             $no++;
+	             $row = array();
+	             $row[] = $no;
+	             $row[] = $field->nama;
+	             $row[] = $field->nomor;
+	             $row[] = $field->pesan;
+	             $row[] = $field->lokasi;
+	            
+	             $row[] =  "<a href=".base_url('Masyarakat/detail_laporan/'.$field->id).">Detail</a>";
+	 
+	             $data[] = $row;
+	         }
+        }else{
+	        foreach ($list as $field) {
+	            $no++;
+	            $row = array();
+	            $row[] = $field->id;
+	            $row[] = $no;
+	            $row[] = $field->nama;
+	            $row[] = $field->nomor;
+	            $row[] = $field->pesan;
+	            $row[] = $field->lokasi;
+	            
+	            $row[] = $field->id_ba == 0 ? 'Berita acara belum ada' : "<a href=".base_url('BeritaAcara/detail_beritaAcara/'.$field->id_ba).">Detail</a>";
+	            //$row[] = 'a';
+	 
+	            $data[] = $row;
+	        }
+	    }
  
         $output = array(
             "draw" => $_POST['draw'],
@@ -51,6 +68,23 @@ class Masyarakat extends CI_Controller {
 		$this->load->view('masyarakat/lapor');
 	}
 
+	public function kelompokBa()
+	{
+		$laporan = $this->input->post('laporan');
+		$id_ba = $this->input->post('id_ba');
+
+		$data = array('id_ba'=> $id_ba);
+		foreach ($laporan as $key) {
+			$where = array('id' => $key);
+			$this->M_masyarakat->updateBa($data,$where);
+		}
+
+		$pesan['status'] = 'Berhasil membuat BA';
+		
+		echo json_encode($laporan);
+		//print_r($laporan);
+	}
+
 	public function detail_laporan($id)
 	{
 		$this->M_masyarakat->update_laporan($id);
@@ -61,13 +95,7 @@ class Masyarakat extends CI_Controller {
 
 	public function laporan_sudah_dibaca()
 	{
-		$this->load->view('masyarakat/laporan_sudah_dibaca');
-	}
-
-	public function view_data_sudah()
-	{
-		$data = $this->M_masyarakat->tampil($kode='sudah');
-        echo json_encode($data);
+		$this->load->view('masyarakat/laporan_belum_dibaca');
 	}
 
 	public function input()

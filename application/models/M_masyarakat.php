@@ -14,6 +14,12 @@ class M_masyarakat extends CI_Model
         return $hasil->result();
     }
 
+    function updateBa($data,$where)
+    {
+        $this->db->where($where);
+        return $this->db->update('laporan', $data);
+    }
+
     function update_laporan($id)
     {
     	$this->db->set('status', 'sudah');

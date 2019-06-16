@@ -12,7 +12,7 @@ $this->load->view('template/sidebar');
 <section class="content-header">
     <h1>
         Laporan Kebakaran
-        <small>Belum Dibaca</small>
+        <small>Sudah Dibaca</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -43,7 +43,7 @@ $this->load->view('template/sidebar');
                         <th>Nomor</th>
                         <th>Pesan</th>
                         <th>Lokasi</th>
-                        <th>Aksi</th>
+                        <th>Berita Acara</th>
                     </tr>
                 </thead>
 
@@ -58,13 +58,13 @@ $this->load->view('template/sidebar');
                         <th>Nomor</th>
                         <th>Pesan</th>
                         <th>Lokasi</th>
-                        <th>Aksi</th>
+                        <th>Berita Acara</th>
                     </tr>
                 </tfoot>
 
             </table>
             <button id="kelompok" onclick="Kelompokkan()">Kelompokkan Berita Acara</button>
-            <button type="submit" id="krm" value="submit" onclick="pilihBa()">Submit</button>
+            <button type="submit" id="krm" value="submit" onclick="pilihBa()">Pilih BA</button>
         </div><!-- /.box-body -->
         <div class="box-footer">
             Footer
@@ -111,7 +111,7 @@ $this->load->view('template/sidebar');
             </table>
         </div>
         <div class="modal-footer">
-          <button type="button" onclick="inputBa()" class="btn btn-default" data-dismiss="modal">Pilih BA</button>
+          <button type="button" onclick="inputBa()" class="btn btn-default" data-dismiss="modal">Submit</button>
         </div>
       </div>
       
@@ -130,6 +130,8 @@ $this->load->view('template/js');
     var table;
     var pilih = true;
     var ba;
+    var rows_selected = null;
+    var id_laporan = [];
     $(document).ready(function() {
         document.getElementById('krm').style.visibility = 'hidden';
  
@@ -139,7 +141,7 @@ $this->load->view('template/js');
             "processing": true, 
             "serverSide": true,  
             "ajax": {
-                "url": "<?php echo site_url('Masyarakat/view_data/belum')?>",
+                "url": "<?php echo site_url('Masyarakat/view_data/sudah')?>",
                 "type": "POST"
             },
             "columnDefs": [
@@ -193,7 +195,7 @@ $this->load->view('template/js');
     }
     
     function pilihBa(){
-        var rows_selected = table.column(0).checkboxes.selected();
+        rows_selected = table.column(0).checkboxes.selected();
         if (rows_selected[0]==null) {
             swal("Peringatan!", "Tidak ada laporan yang dipilih", "error");
         }else{
@@ -205,6 +207,9 @@ $this->load->view('template/js');
             table.ajax.reload();
             document.getElementById('krm').style.visibility = 'hidden';
             console.log(rows_selected);
+            $.each(rows_selected, function(index, rowId){
+                id_laporan.push(rowId);
+            });
         }
     }
 
@@ -214,7 +219,32 @@ $this->load->view('template/js');
     }
 
     function inputBa(){
-        var id_ba = ba.column(0).checkboxes.selected();
+        var id_ba = ba.column(0).checkboxes.selected()[0];
+        console.log(id_ba);
+
+        var postForm = { 
+            // yg 'nama' itu ntar yg di panggil di model, yg ->input->post()
+            'id_ba': id_ba,
+            'laporan': id_laporan
+            };
+
+        $.ajax({
+            type : "POST",
+            url  : "<?php echo base_url('Masyarakat/kelompokBa')?>",
+            dataType : "JSON",
+            data : postForm,
+            success: function(data){
+                id_laporan = [];
+                swal({
+                  title: "Berhasil Mengelompokkan BA!",
+                  icon: "success",
+                  button: "Ok",
+                });
+                table.ajax.reload();
+                console.log(data);
+            }
+        });
+        return false;
     }
 
 </script>

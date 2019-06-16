@@ -85,7 +85,7 @@ $this->load->view('template/js');
             "serverSide": true, 
             "order": [], 
             "ajax": {
-                "url": "<?php echo site_url('Masyarakat/view_data/sudah')?>",
+                "url": "<?php echo site_url('Masyarakat/view_data/belum')?>",
                 "type": "POST"
             },
             "columnDefs": [

@@ -76,14 +76,14 @@ $this->load->view('template/sidebar');
                     <div class="form-group">
                         <label class="control-label col-xs-3" >Password Lama</label>
                         <div class="col-xs-9">
-                            <input name="pl" id="pl" class="form-control" type="text"  style="width:335px;" required>
+                            <input name="pl" id="pl" class="form-control" type="Password"  style="width:335px;" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-xs-3" >Password Baru</label>
                         <div class="col-xs-9">
-                            <input name="pb" id="pb" class="form-control" type="text"  style="width:335px;" required>
+                            <input name="pb" id="pb" class="form-control" type="Password"  style="width:335px;" required>
                         </div>
                     </div>    
                 </div>

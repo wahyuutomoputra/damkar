@@ -33,8 +33,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?php echo site_url('Masyarakat') ?>"><i class="fa  fa-pencil-square-o"></i> Lihat Laporan Baru</a></li>
-                    <li><a href="<?php echo site_url('Masyarakat/laporan_sudah_dibaca') ?>"><i class="fa  fa-pencil-square-o"></i> Lihat Laporan Telah Dibaca</a></li>
+                    <li><a href="<?php echo site_url('Masyarakat') ?>"><i class="fa  fa-pencil-square-o"></i> Lihat Laporan Telah Dibaca</a></li>
+                    <li><a href="<?php echo site_url('Masyarakat/laporan_sudah_dibaca') ?>"><i class="fa  fa-pencil-square-o"></i> Lihat Laporan Belum Dibaca</a></li>
                 </ul>
             </li>     
             <li class="treeview">
@@ -77,11 +77,12 @@
             </li>
             <?php } ?>
             <?php if($_SESSION['status']=='admin'||$_SESSION['status']=='kadis'){?>
-            <li class="active">
+                <li><a href="<?php echo site_url('Pegawai') ?>"><i class="fa fa-book"></i> <span>Data Petugas</span></a></li>
+            <!-- <li class="active">
                 <a href="<?php echo site_url('Pegawai') ?>">
                 <i class="fa fa-th"></i> <span>Data Petugas</span>
                 </a>
-            </li>
+            </li> -->
             <?php } ?>
             <!-- <li><a href="#"><i class="fa fa-circle-o text-danger"></i> Important</a></li>
             <li><a href="#"><i class="fa fa-circle-o text-warning"></i> Warning</a></li>
